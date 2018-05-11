@@ -1,0 +1,38 @@
+<div id="popupItems" data-ng-show="isShowWindowToCreateItem">
+    <div class="overlay" data-ng-click="ToHideShowPopup()"></div>
+    <div class="visible">
+        <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
+        <h2 data-ng-if="isNewItem" class="title popup">Add Item</h2>
+        <h2 data-ng-if="!isNewItem" class="title popup">Change Item</h2>
+        <div class="content popup">
+            <form class="form-group" action="#" method="post" name="addItemForm">
+                <div class="item-of-form-group">
+                    <label>Name</label>
+                    <input data-ng-model="item.name" type="text" name="itemName" placeholder="some text" required /><br>
+                    <div messages-of-invalid-fields item-of-validation="addItemForm.itemName.$error"></div>
+                </div>
+                
+                <div class="item-of-form-group">
+                    <label>Id</label>
+                    <input data-ng-model="item.id" type="number" name="itemId" placeholder="some text" />
+                </div>
+                
+                <div class="item-of-form-group">
+                    <label>Amount</label>
+                    <input data-ng-model="item.amount" type="number" name="itemAmount" placeholder="some text" required />
+                    <div messages-of-invalid-fields item-of-validation="addItemForm.itemAmount.$error"></div>
+                </div>
+                
+                <div class="item-of-form-group">
+                    <label>Price</label>
+                    <input data-ng-model="item.price" type="number" name="itemPrice" placeholder="some text" required />
+                    <div messages-of-invalid-fields item-of-validation="addItemForm.itemPrice.$error"></div>
+                </div>
+            </form>
+
+            <a href="#" data-ng-if="isNewItem" data-ng-click="AddChangeItem('add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add item</a>
+            <a href="#" data-ng-if="!isNewItem" data-ng-click="AddChangeItem('change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change item</a>
+            <a href="#" data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete item</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333333;
+    height: 40px;
+    width: auto;
+    padding: 10px 15px;
+    margin: 0 0 40px 0;
+}
+
+a.button {
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
+}
+
+.big-button {    
+    padding: .5em 2em;
+}
+.small-button {
+    padding: .2em 1em;
+}
+
+a.transparent-white {
+    color: white;
+}
+a.transparent-dark {
+    color: black;
+}
+
+a.button:hover { background: rgba(255,255,255,.2); }
+a.button:active {
+    background: white;
+    transition: 0.2s;
+}
+
+.side-bar {
+    background-color: #F5F5F5;
+    padding: 10px 30px 10px 25px;
+    margin: 0 0 40px 40px;
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 10px -4px;
+    width: 130px;
+}
+
+.menu-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-link a {
+    text-decoration: none;
+    color: #0088CC;
+    line-height: 24px;
+    font-family:  Geneva, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    display: block;
+}
+
+.menu-link:hover a {
+    background-color: #eaeaea;
+}
+
+.container{
+    margin: 0 0 0 40px;
+}
+
+.container h2 {
+    margin: 0 0 20px 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+table {
+    margin: 5px 0 15px 0;
+    border: 1px solid #e3e3e3;
+    border-spacing: 0;
+}
+
+table th, td {
+    padding: 5px 100px 5px 10px;
+    font-size: 18px;
+}
+
+table th {
+    background-color: #F5F5F5;
+}
+
+table tr:nth-child(odd) {
+    background-color: #f2f8ff
+}
+
+
+/* POPUP */
+
+.overlay {
+    background: #000;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1000;
+	opacity: .5;
+}
+
+.visible {
+	background: #fff;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-top: -200px;
+	overflow: hidden;
+	z-index: 2000;
+	width: auto;
+	padding: 0px;
+	margin-left: -250px;
+}
+
+#popupItems button {
+	float: right;
+	line-height: 20px;
+	margin: 1.2em;
+	border: none;
+	background: transparent;
+	color: blue;
+}
+
+.title.popup {
+	margin: 5px 10px;
+}
+
+.content.popup {
+	padding: 0 1em;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background: WhiteSmoke;
+}
+
+.close.popup {
+    float: right;
+    margin: 10px;
+    cursor: pointer;
+}
+
+/* END POPUP */
+
+
+.form-group {
+    text-align: right;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+.form-group input {
+	width: 300px;
+	font-size: 13px;
+	padding: 6px 0 4px 10px;
+	border: 1px solid #cecece;
+	background: #F6F6f6;
+	border-radius: 8px;
+    margin: 10px 0;
+}
+.form-group label {
+    font-size: 18px;
+}
+
+#tableItems tr:not(:first-child):hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
