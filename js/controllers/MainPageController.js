@@ -1,6 +1,5 @@
-var mainModule = angular.module("myApp");
-
-mainModule.controller('MainPageController',
-function($scope) {
-    
-})
+angular.module("myApp").controller('MainPageController',
+    ['$scope',
+    function($scope) {
+        $scope.isShowIt = false;
+}])
