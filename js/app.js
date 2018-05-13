@@ -3,7 +3,8 @@
 // mainModule.config(function($routeProvider) {
 //     $routeProvider
 //     .when('/main-page', {
-//         templateUrl: 'views/main-page.html'
+//         templateUrl: 'views/main-page.html',
+//         controller: 'js/controllers/MainPageController'
 //     })
 //     .when('/my-warehouses', {
 //         templateUrl: 'views/my-warehouses.html'
@@ -12,4 +13,4 @@
 //         templateUrl: 'views/goods.html'
 //     })
     
-// })
+// });

@@ -4,7 +4,7 @@ mainModule.config(function($routeProvider) {
     $routeProvider
     .when('/main-page', {
         templateUrl: 'views/main-page.html',
-        controller: 'controllers/MainPageController'
+        controller: 'MainPageController'
     })
     .when('/my-warehouses', {
         templateUrl: 'views/my-warehouses.html'
@@ -14,6 +14,11 @@ mainModule.config(function($routeProvider) {
     })
     
 });
+
+mainModule.controller('MainPageController',
+function($scope) {
+    $scope.isShowIt = true;
+})
 
 mainModule.controller("mainController", ["$scope", "memoryStorageRepositoryService", function($scope, memoryStorageRepositoryService) {
     $scope.menu = [
