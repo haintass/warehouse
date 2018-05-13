@@ -3,18 +3,18 @@ var mainModule = angular.module("myApp", ['ngMessages']);
 mainModule.controller("mainCtrl", ["$scope", "memoryStorageRepositoryService", function($scope, memoryStorageRepositoryService) {
     $scope.menu = [
         {
-            name: "main page",
-            value: "#1"
+            name: "Main page",
+            value: "#main-page"
         },
         
         {
             name: "My warehouses",
-            value: "#2"
+            value: "#my-warehouses"
         },
         
         {
             name: "Goods",
-            value: "#3"
+            value: "#goods"
         }
     ];
     
