@@ -11,7 +11,6 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
     .when('/goods', {
         templateUrl: 'views/goods.html'
     })
-    
 });
 // angular.module("myApp").controller('MainPageController',
 //     ['$scope',
