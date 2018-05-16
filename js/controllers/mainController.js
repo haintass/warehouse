@@ -1,6 +1,6 @@
 var mainModule = angular.module("myApp");
 
-mainModule.controller("mainController", ["$scope", "memoryStorageRepositoryService", function($scope, memoryStorageRepositoryService) {
+mainModule.controller("MainController", ["$scope", "memoryStorageRepositoryService", function($scope, memoryStorageRepositoryService) {
     $scope.menu = [
         {
             name: "Main page",

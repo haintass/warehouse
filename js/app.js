@@ -6,14 +6,10 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
         controller: 'MainPageController'
     })
     .when('/my-warehouses', {
-        templateUrl: 'views/my-warehouses.html'
+        templateUrl: 'views/my-warehouses.html',
+        controller: 'MyWarehousesController'
     })
     .when('/goods', {
         templateUrl: 'views/goods.html'
     })
 });
-// angular.module("myApp").controller('MainPageController',
-//     ['$scope',
-//     function($scope) {
-//         $scope.isShowIt = false;
-// }])

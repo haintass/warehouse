@@ -1,1 +1,3 @@
-<h1>Your warehouses</h1>
+<h1 ng-if="warehouses.length > 0">Your warehouses</h1>
+<h1 ng-if="warehouses.length == 0">You don't have warehouses</h1>
+<button type="button" class="btn btn-secondary">Create warehouse</button>
