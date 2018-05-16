@@ -17,6 +17,5 @@ mainModule.controller("mainController", ["$scope", "memoryStorageRepositoryServi
             value: "#!goods"
         }
     ];
-    
 }])
 
