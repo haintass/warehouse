@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody class="">
-    <tr ng-repeat="item in warehouses" ng-click="ToHideShowPopup(item.id)">
+    <tr ng-repeat="item in warehouses" ng-click="ToHideShowPopup($index)">
       <td>{{item.name}}</td>
       <td>{{item.id}}</td>
     </tr>
