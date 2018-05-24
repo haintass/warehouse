@@ -1,4 +1,20 @@
-<h1 ng-if="warehouses.length > 0">Your warehouses</h1>
+<div ng-if="warehouses.length > 0">
+    <h1>Your warehouses</h1>
+    <table class="table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Id</th>
+    </tr>
+  </thead>
+  <tbody class="">
+    <tr ng-repeat="item in warehouses" ng-click="ToHideShowPopup(item.id)">
+      <td>{{item.name}}</td>
+      <td>{{item.id}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <h1 ng-if="warehouses.length == 0">You don't have warehouses</h1>
 <button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create warehouse</button>
 <div popup-to-create-warehouse ng-show="isShowPopup"></div>

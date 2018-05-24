@@ -1,8 +1,4 @@
 <div id="popupItems">
-    <h2>Title</h2>
-    
-    <a href="#" data-ng-click="ToHideShowPopup()" class="button transparent-dark small-button">Add item</a>
-    
     <div class="overlay" data-ng-click="ToHideShowPopup()"></div>
     <div class="visible">
         <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
@@ -15,14 +11,9 @@
                     <input data-ng-model="item.name" type="text" name="itemName" placeholder="some text" required /><br>
                     <div messages-of-invalid-fields item-of-validation="addItemForm.itemName.$error"></div>
                 </div>
-                
-                <div class="item-of-form-group">
-                    <label>Id</label>
-                    <input data-ng-model="item.id" type="number" name="itemId" placeholder="some text" />
-                </div>
             </form>
 
-            <a href="#" data-ng-if="isNewItem" data-ng-click="AddChangeItem('add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add item</a>
+            <a href="#" data-ng-if="isNewItem" data-ng-click="AddChangeItem('add')" class="btn btn-secondary right" style="margin: 10px 0;">Add item</a>
             <a href="#" data-ng-if="!isNewItem" data-ng-click="AddChangeItem('change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change item</a>
             <a href="#" data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete item</a>
         </div>

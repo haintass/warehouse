@@ -8,16 +8,16 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             return warehouses;
         },
 
-        AddWarehouse: function(name, id) {
-            warehouses.push({ name: name, id: warehouses.lenght });
+        AddWarehouse: function(item) {
+            warehouses.push({ name: item.name, id: warehouses.length });
         },
 
-        ChangeWarehouse: function(key) {
-
+        ChangeWarehouse: function(newItem) {
+            warehouses[newItem.id] = Object.assign({}, newItem);
         },
 
-        DeleteWarehouse: function() {
-
+        DeleteWarehouse: function(key) {
+            warehouses.splice(key, 1);
         },
 
         GetItems: function () {
