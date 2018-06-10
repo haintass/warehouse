@@ -12,4 +12,7 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
     .when('/goods', {
         templateUrl: 'views/goods.html'
     })
+    .when('/warehouse', {
+        templateUrl: 'views/warehouse.html'
+    })
 });

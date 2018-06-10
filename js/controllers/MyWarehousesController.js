@@ -43,4 +43,8 @@ angular.module("myApp").controller('MyWarehousesController',
             memoryStorageRepositoryService.DeleteWarehouse(keyCurrentItem);
             $scope.ToHideShowPopup();
         }
+        
+        $scope.sendDatas = function() {
+            $scope.$emit('warehouseObject', $scope.item);
+        }
 }])
