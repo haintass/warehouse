@@ -45,6 +45,6 @@ angular.module("myApp").controller('MyWarehousesController',
         }
         
         $scope.sendDatas = function() {
-            $scope.$emit('warehouseObject', $scope.item);
+            memoryStorageRepositoryService.currentWarehouse = $scope.item;
         }
 }])

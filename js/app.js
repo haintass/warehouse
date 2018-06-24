@@ -13,6 +13,7 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
         templateUrl: 'views/goods.html'
     })
     .when('/warehouse', {
-        templateUrl: 'views/warehouse.html'
+        templateUrl: 'views/warehouse.html',
+        controller: 'WarehouseController'
     })
 });

@@ -4,6 +4,8 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     var someId = 0;
 
     return {
+        currentWarehouse: {},
+        
         GetWarehouses: function() {
             return warehouses;
         },

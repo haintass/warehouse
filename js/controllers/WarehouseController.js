@@ -1,7 +1,5 @@
-angular.module("myApp").controller('WarehousesController',
+angular.module("myApp").controller('WarehouseController',
     ['$scope', 'memoryStorageRepositoryService',
     function($scope, memoryStorageRepositoryService) {
-        $scope.$on('warehouseObject', function(datas) {
-            $scope.obj = datas;
-        })
+       $scope.obj = memoryStorageRepositoryService.currentWarehouse;
 }])
