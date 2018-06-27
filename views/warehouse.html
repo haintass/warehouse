@@ -1,2 +1,4 @@
-<h1>Hi</h1>
-<span>{{obj.name}}</span>
+<h1>{{warehouse.name}}</h1>
+<h3>Your warehous is empty.</h3>
+<button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Add Item</button>
+<div popup-to-create-item ng-show="isShowPopup"></div>
