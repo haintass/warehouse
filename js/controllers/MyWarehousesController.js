@@ -10,7 +10,7 @@ angular.module("myApp").controller('MyWarehousesController',
         
         $scope.ToHideShowPopup = function(key) {
             keyCurrentItem = key;
-            if (key == undefined) {
+            if (key === undefined) {
                 $scope.item = {};
                 $scope.isNewItem = true;
             }
@@ -27,20 +27,20 @@ angular.module("myApp").controller('MyWarehousesController',
         var AddWarehouse = memoryStorageRepositoryService.AddWarehouse;
         var ChangeWarehouse = memoryStorageRepositoryService.ChangeWarehouse;
         
-        $scope.AddItem = function() {
+        $scope.AddWarehouse = function() {
             AddWarehouse(Object.assign({}, $scope.item));
             $scope.ToHideShowPopup();
             $scope.item = {};
         }
         
-        $scope.ChangeItem = function() {
+        $scope.ChangeWarehouse = function() {
             changedItem = Object.assign({}, $scope.item);
             ChangeWarehouse(changedItem);
             $scope.ToHideShowPopup();
         }
         
-        $scope.DeleteItem = function(){
-            memoryStorageRepositoryService.DeleteWarehouse(keyCurrentItem);
+        $scope.DeleteWarehouse = function(){
+            DeleteWarehouse(keyCurrentItem);
             $scope.ToHideShowPopup();
         }
         

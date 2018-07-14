@@ -2,14 +2,32 @@
     <div class="overlay" data-ng-click="ToHideShowPopup()"></div>
     <div class="visible">
         <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
-        <h2 data-ng-if="isNewItem" class="title popup">Add Item</h2>
-        <h2 data-ng-if="!isNewItem" class="title popup">Change Item</h2>
+        <h4 data-ng-if="isNewItem" class="title popup">Add Item</h2>
+        <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h2>
         <div class="content popup">
-            
+            <div class="mb-3">
+                <div class="input-group input-group-sm mb-3" ng-repeat="item in arr track by $index">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="basic-addon3">field name</label>
+                    </div>
+                    <input type="text" id="basic-addon3" name="itemName" ng-model="arr[$index].fieldName" class="form-control" required>
 
-            <a href="#" data-ng-if="isNewItem" data-ng-click="AddChangeItem('add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add item</a>
-            <a href="#" data-ng-if="!isNewItem" data-ng-click="AddChangeItem('change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change item</a>
-            <a href="#" data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete item</a>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">field type</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" ng-model=arr[$index].fieldType required>
+                        <option value="Number">Number</option>
+                        <option value="String">String</option>
+                        <option value="Boolean">Boolean</option>
+                    </select>
+                    <a class="close" ng-click="removeField($index)">X</a>
+                </div>
+                <a class="btn btn-primary btn-sm" ng-click="addField()" role="button">add field</a>
+            </div>
+
+            <a data-ng-if="isNewItem" data-ng-click="AddChangeItem('add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add item</a>
+            <a data-ng-if="!isNewItem" data-ng-click="AddChangeItem('change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change item</a>
+            <a data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete item</a>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
     var warehouses = [];
     var items = [];
-    var someId = 0;
+    var warehouseId = 0;
 
     return {
         currentWarehouse: {},
@@ -11,7 +11,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
 
         AddWarehouse: function(item) {
-            warehouses.push({ name: item.name, id: someId++ });
+            warehouses.push({ name: item.name, id: warehouseId++ });
         },
 
         ChangeWarehouse: function(newItem) {
