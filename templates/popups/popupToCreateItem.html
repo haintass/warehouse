@@ -6,16 +6,17 @@
         <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h2>
         <div class="content popup">
             <div class="mb-3">
-                <div class="input-group input-group-sm mb-3" ng-repeat="item in arr track by $index">
+                <div class="input-group input-group-sm mb-3" ng-repeat="item in itemFields track by $index">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="basic-addon3">field name</label>
                     </div>
-                    <input type="text" id="basic-addon3" name="itemName" ng-model="arr[$index].fieldName" class="form-control" required>
+                    <input type="text" id="basic-addon3" name="itemName" ng-model="itemFields[$index].fieldName" class="form-control" required>
 
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">field type</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01" ng-model=arr[$index].fieldType required>
+                    <select class="custom-select" id="inputGroupSelect01" ng-model=itemFields[$index].fieldType required>
+                        <option value="">Choose...</option>
                         <option value="Number">Number</option>
                         <option value="String">String</option>
                         <option value="Boolean">Boolean</option>
