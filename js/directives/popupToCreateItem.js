@@ -1,4 +1,4 @@
-angular.module("myApp").directive('popupToCreateItem', [function() {
+angular.module("myApp").directive('popupToCreateItem', [ 'memoryStorageRepositoryService', function(memoryStorageRepositoryService) {
     return {
         restrict: 'A',
         templateUrl: 'templates/popups/popupToCreateItem.html',
@@ -11,6 +11,10 @@ angular.module("myApp").directive('popupToCreateItem', [function() {
             
             $scope.removeField = function(index) {
                 $scope.itemFields.splice(index, 1);
+            }
+
+            $scope.AddItem = function() {
+                memoryStorageRepositoryService.AddItem(Object.assign({}, $scope.itemFields));
             }
         }
     }

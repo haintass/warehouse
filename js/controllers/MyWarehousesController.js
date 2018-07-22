@@ -44,7 +44,7 @@ angular.module("myApp").controller('MyWarehousesController',
             $scope.ToHideShowPopup();
         }
         
-        $scope.sendDatas = function() {
-            memoryStorageRepositoryService.currentWarehouse = $scope.item;
+        $scope.OpenWarehouse = function() {
+            memoryStorageRepositoryService.currentWarehouse = $scope.warehouses[$scope.item.id];
         }
 }])

@@ -27,7 +27,8 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
 
         AddItem: function (newItem) {
-            
+            items.push(newItem);
+            this.currentWarehouse.items = newItem;
         },
 
         ChangeItem: function () {
