@@ -1,4 +1,18 @@
 <h1>{{warehouse.name}}</h1>
-<h3>Your warehous is empty.</h3>
+<h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
+
+<table ng-if="warehouse.items" class="table-hover">
+    <thead>
+        <tr>
+            <th ng-repeat="itemName in warehouse.items">{{itemName.fieldName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <td ng-repeat="itemName in warehouse.items">
+            <input type="text">
+        </td>
+    </tbody>
+    </table>
+
 <button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Add Item</button>
 <div popup-to-create-item ng-show="isShowPopup"></div>

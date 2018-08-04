@@ -1,7 +1,28 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
-    var warehouses = [];
+    var warehouses = [
+        {
+            name: "First warehouse",
+            id: 0,
+            items: [
+                { fieldName: "first item", fieldType: "String" },
+                { fieldName: "Count", fieldType: "Integer" }
+            ]
+        },
+        {
+            name: "Second warehouse",
+            id: 1
+        },
+        {
+            name: "Third warehouse",
+            id: 2
+        },
+        {
+            name: "Fourth warehouse",
+            id: 3
+        }
+    ];
     var items = [];
-    var warehouseId = 0;
+    var warehouseId = warehouses.length;
 
     return {
         currentWarehouse: {},

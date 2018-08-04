@@ -14,7 +14,8 @@ angular.module("myApp").directive('popupToCreateItem', [ 'memoryStorageRepositor
             }
 
             $scope.AddItem = function() {
-                memoryStorageRepositoryService.AddItem(Object.assign({}, $scope.itemFields));
+                memoryStorageRepositoryService.AddItem($scope.itemFields);
+                $scope.ToHideShowPopup();
             }
         }
     }
