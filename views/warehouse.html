@@ -4,15 +4,17 @@
 <table ng-if="warehouse.items" class="table-hover">
     <thead>
         <tr>
-            <th ng-repeat="itemName in warehouse.items">{{itemName.fieldName}}</th>
+            <th ng-repeat="item in warehouse.items">{{item.fieldName}}</th>
         </tr>
     </thead>
     <tbody>
-        <td ng-repeat="itemName in warehouse.items">
-            <input type="text">
-        </td>
+        <tr ng-repeat="count in warehouse.items[0].value track by $index">
+            <td ng-repeat="item in warehouse.items">
+                {{item.value}}
+            </td>
+        </tr>
     </tbody>
-    </table>
+</table>
 
 <button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Add Item</button>
 <div popup-to-create-item ng-show="isShowPopup"></div>

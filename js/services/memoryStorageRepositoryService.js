@@ -3,9 +3,17 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         {
             name: "First warehouse",
             id: 0,
-            items: [
-                { fieldName: "first item", fieldType: "String" },
-                { fieldName: "Count", fieldType: "Integer" }
+            items:
+            [
+                { fieldName: "Name", fieldType: "String",
+                    value: [ "motherboard", "RAM", "keyboard", "monitor" ]
+                },
+                { fieldName: "Count", fieldType: "Integer",
+                    value: [ 20, 50, 10, 15 ]
+                },
+                { fieldName: "Price", fieldType: "Integer",
+                    value: [ 5000, 2000, 2500, 7000 ]
+                }
             ]
         },
         {
