@@ -2,8 +2,8 @@
     <div class="overlay" data-ng-click="ToHideShowPopup()"></div>
     <div class="visible">
         <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
-        <h4 data-ng-if="isNewItem" class="title popup">Add Item</h2>
-        <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h2>
+        <h4 data-ng-if="isNewItem" class="title popup">Add Item</h4>
+        <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h4>
         <div class="content popup">
             <div class="mb-3">
                 <div class="input-group input-group-sm mb-3" ng-repeat="item in itemFields track by $index">
