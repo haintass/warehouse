@@ -4,7 +4,11 @@ angular.module("myApp").controller('WarehouseController',
         $scope.warehouse = memoryStorageRepositoryService.currentWarehouse;
         $scope.isShowPopup = false;
         $scope.isNewItem = true;
-        $scope.id = 0;
+        $scope.itemsCount = [];
+
+        for (var key in $scope.warehouse) {
+            $scope.itemsCount.push(key);
+        };
 
         $scope.ToHideShowPopup = function() {
             $scope.isShowPopup = !$scope.isShowPopup;

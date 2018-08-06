@@ -8,9 +8,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td ng-repeat="items in warehouse.items track by $index">
-                <div ng-repeat="value in items.value">{{value}}</div>
+        <tr ng-repeat="itemId in itemsCount">
+            <td ng-repeat="value in warehouse.items">
+                <div>{{value.value[itemId]}}</div>
             </td>
         </tr>
     </tbody>
