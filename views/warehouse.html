@@ -1,10 +1,11 @@
 <h1>{{warehouse.name}}</h1>
 <h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
 
-<table ng-if="warehouse.items" class="table-hover">
+<table ng-if="warehouse.items" class="table-hover mb-3">
     <thead>
         <tr>
             <th ng-repeat="item in warehouse.items">{{item.fieldName}}</th>
+            <th>actions</th>
         </tr>
     </thead>
     <tbody>
@@ -12,9 +13,23 @@
             <td ng-repeat="value in warehouse.items">
                 <div>{{value.value[itemId]}}</div>
             </td>
+            <td>
+                <span></span>
+            </td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td ng-repeat="value in warehouse.items">
+                <span>hi!</span>
+            </td>
+            <td>
+                <span>Add button</span>
+            </td>
+        </tr>
+    </tfoot>
 </table>
 
-<button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Add Item</button>
+<button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
+<button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Change table</button>
 <div popup-to-create-item ng-show="isShowPopup"></div>

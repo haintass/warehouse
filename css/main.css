@@ -188,3 +188,54 @@ table tr:nth-child(odd) {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+.error-validation-popup {
+    z-index: 999;
+    font-size: 14px;
+}
+.error-validation-popup .show-right {
+    width: 75px;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    left: 300px;
+    top: 35px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.2)
+}
+
+.error-validation-popup .show-left {
+    width: 75px;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    left: 100px;
+    top: 35px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.2)
+}
+
+.show-right:before,
+.show-right:after,
+.show-left:before,
+.show-left:after {
+    position: absolute;
+    top:0;
+    left: 45px;
+    margin-top: -21px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom: 12px solid #fff;
+    content: "";
+    display: block;
+}
+
+.show:before {
+    border-bottom: 12px solid #ccc;
+    margin-top: -22px;    
+}
+
+.red-border-validation {
+    border: 5px solid red;
+}

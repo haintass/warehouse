@@ -4,31 +4,47 @@
         <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
         <h4 data-ng-if="isNewItem" class="title popup">Add Item</h4>
         <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h4>
+        <ng-form name="itemsForm">
         <div class="content popup">
             <div class="mb-3">
-                <div class="input-group input-group-sm mb-3" ng-repeat="item in itemFields track by $index">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="basic-addon3">field name</label>
-                    </div>
-                    <input type="text" id="basic-addon3" name="itemName" ng-model="itemFields[$index].fieldName" class="form-control" required>
+                <div ng-repeat="item in itemFields track by $index">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">field name</label>
 
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">field type</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01" ng-model=itemFields[$index].fieldType required>
-                        <option value="">Choose...</option>
-                        <option value="Number">Number</option>
-                        <option value="String">String</option>
-                        <option value="Boolean">Boolean</option>
-                    </select>
-                    <a class="close" ng-click="removeField($index)">X</a>
+                                <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.itemName{{$index}})">
+                                    <div class="show show-left">required</div>
+                                </div>
+                            </div>
+                            <input type="text" name="itemName{{$index}}" ng-model="itemFields[$index].fieldName" class="form-control" required>
+
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">field type</label>
+                                
+                                <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.fieldType{{$index}})">
+                                    <div class="show show-right">required</div>
+                                </div>
+                            </div>
+                            <select class="custom-select" name="fieldType{{$index}}" ng-model="itemFields[$index].fieldType" required>
+                                <option value="">Choose...</option>
+                                <option value="Number">Number</option>
+                                <option value="String">String</option>
+                               <option value="Boolean">Boolean</option>
+                            </select>
+                            <a class="close" ng-click="removeField($index)">X</a>
+                        </div>
                 </div>
+                    
+                <div style="clear: both"></div>
                 <a class="btn btn-primary btn-sm" ng-click="addField()" role="button">add field</a>
             </div>
 
-            <a data-ng-if="isNewItem" data-ng-click="AddItem()" class="button transparent-dark small-button right" style="margin: 10px 0;">Add item</a>
-            <a data-ng-if="!isNewItem" data-ng-click="ChangeItem()" class="button transparent-dark small-button right" style="margin: 10px 0;">Change item</a>
-            <a data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete item</a>
+            <a data-ng-if="isNewItem" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Add field</a>
+            <a data-ng-if="!isNewItem" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Change</a>
+            <a data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete table</a>
+            
+            <div ng-show="formIsInvalid" class="right" style="color: red; margin: 15px 5px;" >Fill all fields</div>
+        </ng-form>
         </div>
     </div>
 </div>

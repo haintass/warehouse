@@ -13,9 +13,29 @@ angular.module("myApp").directive('popupToCreateItem', [ 'memoryStorageRepositor
                 $scope.itemFields.splice(index, 1);
             }
 
-            $scope.AddItem = function() {
-                memoryStorageRepositoryService.AddItem($scope.itemFields);
+            AddItem = function() {
+                memoryStorageRepositoryService.AddItem(Object.assign({}, $scope.itemFields));
                 $scope.ToHideShowPopup();
+                $scope.getItemsOfWarehouse();
+            }
+
+            $scope.checkFieldValidity = function(item) {
+                if (item.$error.required && item.$dirty) {
+                    return true;
+                }
+                else {
+                    false;
+                }
+            }
+
+            $scope.checkFormValidity = function(form) {
+                if (form.$error.required) {
+                    $scope.formIsInvalid = true;
+                }
+                else {
+                    $scope.formIsInvalid = false;
+                    AddItem();
+                }
             }
         }
     }
