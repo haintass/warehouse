@@ -1,35 +1,39 @@
-<h1>{{warehouse.name}}</h1>
 <h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
 
-<table ng-if="warehouse.items" class="table-hover mb-3">
-    <thead>
-        <tr>
-            <th ng-repeat="item in warehouse.items">{{item.fieldName}}</th>
-            <th>actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="itemId in itemsCount">
-            <td ng-repeat="value in warehouse.items">
-                <div>{{value.value[itemId]}}</div>
-            </td>
-            <td>
-                <span></span>
-            </td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td ng-repeat="value in warehouse.items">
-                <span>hi!</span>
-            </td>
-            <td>
-                <span>Add button</span>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8"><h2><b>{{warehouse.name}}</b></h2></div>
+                <div class="col-sm-4">
+                    <button ng-click="" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th ng-repeat="item in warehouse.items">{{item.fieldName}}</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="itemId in itemsCount">
+                    <td ng-repeat="value in warehouse.items">
+                        <div>{{value.value[itemId]}}</div>
+                    </td>
+                    <td>
+                        <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    </td>
+                    <div add-new-row row-count="itemsCount" ng-show="isShowPopup"></div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>  
 
 <button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
 <button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Change table</button>
-<div popup-to-create-item ng-show="isShowPopup"></div>
+<!---<div popup-to-create-item ng-show="isShowPopup"></div> -->
