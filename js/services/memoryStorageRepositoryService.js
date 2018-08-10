@@ -8,10 +8,10 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                 { fieldName: "Name", fieldType: "String",
                     value: [ "motherboard", "RAM", "keyboard", "monitor" ]
                 },
-                { fieldName: "Count", fieldType: "Integer",
+                { fieldName: "Count", fieldType: "Number",
                     value: [ 20, 50, 10, 15 ]
                 },
-                { fieldName: "Price", fieldType: "Integer",
+                { fieldName: "Price", fieldType: "Number",
                     value: [ 5000, 2000, 2500, 7000 ]
                 }
             ]

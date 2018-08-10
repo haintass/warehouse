@@ -186,9 +186,11 @@ a.button:active {
     box-shadow: 0 1px 10px rgba(0,0,0,.2)
 }
 
+/* VALIDATION POPUP */
+
 .error-validation-popup .show-left {
     width: 75px;
-    position: absolute;
+    position: relative;
     background: #fff;
     border: 1px solid #ccc;
     padding: 5px 8px;
@@ -217,6 +219,8 @@ a.button:active {
     border-bottom: 12px solid #ccc;
     margin-top: -22px;    
 }
+
+/* END VALIDATION POPUP */
 
 
 /*  TABLE  */
@@ -310,12 +314,18 @@ table.table .form-control {
     box-shadow: none;
     border-radius: 2px;
 }
-table.table .form-control.error {
+table.table .error-validation-input {
     border-color: #f50000;
 }
-table.table td .add {
-    display: none;
+.required:after {
+    color: #f50000;
+    content: "Required";
 }
+.incorrect-type:after {
+    color: #f50000;
+    content: "Incorrect type";
+}
+
 table.table td {
     white-space: nowrap;
 }

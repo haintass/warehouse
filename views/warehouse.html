@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-sm-8"><h2><b>{{warehouse.name}}</b></h2></div>
                 <div class="col-sm-4">
-                    <button ng-click="" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    <button ng-click="AddColumns()" type="button" id="addNewButton" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
             </div>
         </div>
@@ -18,22 +18,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="itemId in itemsCount">
+                <tr ng-repeat="itemId in getItemsOfWarehouse()">
                     <td ng-repeat="value in warehouse.items">
-                        <div>{{value.value[itemId]}}</div>
+                        <div ng-show="!isEditing">{{value.value[itemId]}}</div>
+                        <input class="form-control" ng-show="isEditing" type="text" value="{{value.value[itemId]}}">
+                        <div class="error-message"></div>
                     </td>
                     <td>
-                        <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                        <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                        <a ng-show="isEditing"  ng-click="SaveChanges()" data-itemId="{{itemId}}" class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                        <a ng-show="!isEditing"  ng-click="isEditing = !isEditing" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a ng-click="DeleteItemsInRow()" data-itemId="{{itemId}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                     </td>
-                    <div add-new-row row-count="itemsCount" ng-show="isShowPopup"></div>
+                </tr>
+                <tr ng-show="isNewRow">
+                        <td ng-repeat="item in getRowsOfTable() track by $index">
+                            <input type="text" class="form-control">
+                            <div class="error-message"></div>
+                        </td>
+                        <td>
+                            <a ng-click="addNewItem()" class="add" title="Add" data-toggle="tooltip" data-original-title="Add"><i class="material-icons">&#xE03B;</i></a>
+                            <a ng-click="DeleteItemsInRow()" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                        </td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>  
+</div>
 
 <button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
 <button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Change table</button>
-<!---<div popup-to-create-item ng-show="isShowPopup"></div> -->
