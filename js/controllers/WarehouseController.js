@@ -6,10 +6,9 @@ angular.module("myApp").controller('WarehouseController',
             $scope.isEditing = false;
             $scope.isNewRow = false;
             $scope.isNewTable = $scope.warehouse.items ? $scope.warehouse.items[0].value ? false : true : true;
-            var addNewItemsButton = $("#addNewButton");
 
             $scope.addNewItem = function () {
-                $(document).on("click", ".add", function () {
+                $(document).on("click", ".add-new-item", function () {
                     var empty = false;
 
                     var input = $(this).parents("tr").find('input[type="text"]');
@@ -18,6 +17,7 @@ angular.module("myApp").controller('WarehouseController',
                         if (!$(this).val()) {
                             $(this).addClass("error-validation-input");
                             $(this).nextAll().addClass("required");
+                            $(this).nextAll().removeClass("incorrect-type");
                             empty = true;
                         } else {
                             $(this).removeClass("error-validation-input");
@@ -40,12 +40,15 @@ angular.module("myApp").controller('WarehouseController',
 
                         if (!input.hasClass('error-validation-input')) {
                             _.forEach(input, function (item, key) {
+                                if (!$scope.warehouse.items[key].value) {
+                                    $scope.warehouse.items[key].value = [];
+                                }
                                 $scope.warehouse.items[key].value.push(item.value);
                                 item.value = "";
                             });
 
                             $scope.isNewRow = !$scope.isNewRow;
-                            addNewItemsButton.prop('disabled', false);
+                            $("#addNewButton").prop('disabled', false);
                         }
                     }
 
@@ -54,7 +57,7 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             $scope.SaveChanges = function () {
-                $(document).on("click", ".add", function () {
+                $(document).on("click", ".add-changes", function () {
                     if (this.dataset.itemid) {
                         var itemId = +this.dataset.itemid;
                         var inputs = $(this).parents('tr').find('input[type="text"]');
@@ -97,8 +100,9 @@ angular.module("myApp").controller('WarehouseController',
                     }
                     else {
                         $scope.isNewRow = false;
-                        addNewItemsButton.prop('disabled', false);
+                        $("#addNewButton").prop('disabled', false);
                         var input = $(this).parents("tr").find('input[type="text"]');
+                        input.nextAll().removeClass("required");
 
                         _.forEach(input, function (value) {
                             value.value = "";
@@ -135,7 +139,7 @@ angular.module("myApp").controller('WarehouseController',
             $scope.AddColumns = function () {
                 $scope.isNewRow = !$scope.isNewRow;
                 var input = $("table.table tr:last").find('input[type="text"]');
-                addNewItemsButton.prop('disabled', true);
+                $("#addNewButton").prop('disabled', true);
 
                 input.each(function () {
                     $(this).removeClass("error-validation-input");
@@ -156,7 +160,9 @@ angular.module("myApp").controller('WarehouseController',
                         };
                         return itemsCount;
                     }
+                    return [];
                 }
+                return [];
             };
 
             $scope.getRowsOfTable = function () {

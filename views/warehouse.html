@@ -1,6 +1,6 @@
 <h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
 
-<div class="container">
+<div ng-if="warehouse.items" class="container">
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
@@ -25,7 +25,7 @@
                         <div class="error-message"></div>
                     </td>
                     <td>
-                        <a ng-show="isEditing"  ng-click="SaveChanges()" data-itemId="{{itemId}}" class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                        <a ng-show="isEditing"  ng-click="SaveChanges()" data-itemId="{{itemId}}" class="add add-changes" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                         <a ng-show="!isEditing"  ng-click="isEditing = !isEditing" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                         <a ng-click="DeleteItemsInRow()" data-itemId="{{itemId}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                     </td>
@@ -36,14 +36,18 @@
                             <div class="error-message"></div>
                         </td>
                         <td>
-                            <a ng-click="addNewItem()" class="add" title="Add" data-toggle="tooltip" data-original-title="Add"><i class="material-icons">&#xE03B;</i></a>
+                            <a ng-click="addNewItem()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add"><i class="material-icons">&#xE03B;</i></a>
                             <a ng-click="DeleteItemsInRow()" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                 </tr>
             </tbody>
+                <caption ng-show="getItemsOfWarehouse().length == 0" style="caption-side: bottom; text-align: center;">
+                    <h3>Table is empty</h3>
+                </caption>
         </table>
     </div>
 </div>
 
 <button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
 <button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Change table</button>
+<div popup-to-create-item ng-show="isShowPopup"></div>
