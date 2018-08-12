@@ -45,6 +45,6 @@ angular.module("myApp").controller('MyWarehousesController',
         }
         
         $scope.OpenWarehouse = function() {
-            memoryStorageRepositoryService.currentWarehouse = $scope.warehouses[$scope.item.id];
+            memoryStorageRepositoryService.SetCurrentWarehouseId($scope.item.id);
         }
 }])

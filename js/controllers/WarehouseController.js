@@ -1,16 +1,20 @@
 angular.module("myApp").controller('WarehouseController',
     ['$scope', 'memoryStorageRepositoryService',
         function ($scope, memoryStorageRepositoryService) {
-            $scope.warehouse = memoryStorageRepositoryService.currentWarehouse;
+            $scope.warehouse = memoryStorageRepositoryService.GetCurrentWarehouse();
             $scope.isShowPopup = false;
             $scope.isEditing = false;
             $scope.isNewRow = false;
-            $scope.isNewTable = $scope.warehouse.items ? $scope.warehouse.items[0].value ? false : true : true;
+            $scope.isNewTable = $scope.warehouse.items ? false : true;
 
-            $scope.addNewItem = function () {
+            var AddNewValueToItems = memoryStorageRepositoryService.AddNewValueToItems;
+            var DeleteValuesFromItems = memoryStorageRepositoryService.DeleteValuesFromItems;
+            var SaveValuesChangesInItems = memoryStorageRepositoryService.SaveValuesChangesInItems;
+
+            $scope.addNewValueToItems = function () {
                 $(document).on("click", ".add-new-item", function () {
+                    var newItems = [];
                     var empty = false;
-
                     var input = $(this).parents("tr").find('input[type="text"]');
 
                     input.each(function () {
@@ -18,6 +22,7 @@ angular.module("myApp").controller('WarehouseController',
                             $(this).addClass("error-validation-input");
                             $(this).nextAll().addClass("required");
                             $(this).nextAll().removeClass("incorrect-type");
+
                             empty = true;
                         } else {
                             $(this).removeClass("error-validation-input");
@@ -40,16 +45,35 @@ angular.module("myApp").controller('WarehouseController',
 
                         if (!input.hasClass('error-validation-input')) {
                             _.forEach(input, function (item, key) {
-                                if (!$scope.warehouse.items[key].value) {
-                                    $scope.warehouse.items[key].value = [];
-                                }
-                                $scope.warehouse.items[key].value.push(item.value);
+                                newItems.push(item.value);
                                 item.value = "";
                             });
+                            AddNewValueToItems(newItems);
 
-                            $scope.isNewRow = !$scope.isNewRow;
                             $("#addNewButton").prop('disabled', false);
+                            $scope.isNewRow = !$scope.isNewRow;
+                            $scope.$apply();
                         }
+                    }
+                });
+            };
+
+            $scope.DeleteItemsInRow = function () {
+                $(document).on("click", ".delete", function () {
+                    if (this.dataset.valueid) {
+                        var valueId = +this.dataset.valueid;
+
+                        DeleteValuesFromItems($scope.warehouse.items, valueId);
+                    }
+                    else {
+                        $scope.isNewRow = false;
+                        $("#addNewButton").prop('disabled', false);
+                        var input = $(this).parents("tr").find('input[type="text"]');
+                        input.nextAll().removeClass("required");
+
+                        _.forEach(input, function (value) {
+                            value.value = "";
+                        });
                     }
 
                     $scope.$apply();
@@ -58,8 +82,8 @@ angular.module("myApp").controller('WarehouseController',
 
             $scope.SaveChanges = function () {
                 $(document).on("click", ".add-changes", function () {
-                    if (this.dataset.itemid) {
-                        var itemId = +this.dataset.itemid;
+                    if (this.dataset.valueid) {
+                        var valueId = +this.dataset.valueid;
                         var inputs = $(this).parents('tr').find('input[type="text"]');
 
                         inputs.each(function (key, item) {
@@ -81,35 +105,9 @@ angular.module("myApp").controller('WarehouseController',
                                 }
                             }
 
-                            $scope.warehouse.items[key].value[itemId] = item.value;
-                        });
-
-                        $scope.$apply();
-                    }
-                });
-            };
-
-            $scope.DeleteItemsInRow = function () {
-                $(document).on("click", ".delete", function () {
-                    if (this.dataset.itemid) {
-                        var itemId = +this.dataset.itemid;
-
-                        _.forEach($scope.warehouse.items, function (value, key) {
-                            $scope.warehouse.items[key].value.splice(itemId, 1);
+                            SaveValuesChangesInItems(item.value, key, valueId);
                         });
                     }
-                    else {
-                        $scope.isNewRow = false;
-                        $("#addNewButton").prop('disabled', false);
-                        var input = $(this).parents("tr").find('input[type="text"]');
-                        input.nextAll().removeClass("required");
-
-                        _.forEach(input, function (value) {
-                            value.value = "";
-                        });
-                    }
-
-                    $scope.$apply();
                 });
             };
 
@@ -148,7 +146,7 @@ angular.module("myApp").controller('WarehouseController',
 
             $scope.ToHideShowPopup = function () {
                 $scope.isShowPopup = !$scope.isShowPopup;
-                $scope.isNewTable = $scope.warehouse.items ? $scope.warehouse.items[0].value ? false : true : true;
+                $scope.isNewTable = $scope.warehouse.items ? false : true;
             };
 
             $scope.getItemsOfWarehouse = function () {

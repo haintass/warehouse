@@ -12,18 +12,18 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text">field name</label>
 
-                                <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.itemName{{$index}})">
+                                <!-- <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.itemName{{$index}})">
                                     <div class="show show-left">required</div>
-                                </div>
+                                </div> -->
                             </div>
                             <input type="text" name="itemName{{$index}}" ng-model="itemFields[$index].fieldName" class="form-control" required>
 
                             <div class="input-group-prepend">
                                 <label class="input-group-text">field type</label>
                                 
-                                <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.fieldType{{$index}})">
+                                <!-- <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.fieldType{{$index}})">
                                     <div class="show show-right">required</div>
-                                </div>
+                                </div> -->
                             </div>
                             <select class="custom-select" name="fieldType{{$index}}" ng-model="itemFields[$index].fieldType" required>
                                 <option value="">Choose...</option>
@@ -39,9 +39,9 @@
                 <a class="btn btn-primary btn-sm" ng-click="addField()" role="button">add field</a>
             </div>
 
-            <a data-ng-if="isNewItem" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Add field</a>
-            <a data-ng-if="!isNewItem" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Change</a>
-            <a data-ng-if="!isNewItem" data-ng-click="DeleteItem()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete table</a>
+            <a data-ng-if="isNewTable" data-ng-click="checkFormValidity(itemsForm, 'add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add field</a>
+            <a data-ng-if="!isNewTable" data-ng-click="checkFormValidity(itemsForm, 'change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change</a>
+            <a data-ng-if="!isNewTable" data-ng-click="DeleteItems()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete table</a>
             
             <div ng-show="formIsInvalid" class="right" style="color: red; margin: 15px 5px;" >Fill all fields</div>
         </ng-form>
