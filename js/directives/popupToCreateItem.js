@@ -5,21 +5,8 @@ angular.module("myApp").directive('popupToCreateItem', ['memoryStorageRepository
         controller: function ($scope) {
             $scope.isNewItem = true;
             $scope.itemFields = [];
-
-            var setFields = function() {
-                if ($scope.warehouse.items) {
-                    _.forEach($scope.warehouse.items, function (value, key) {
-                        $scope.itemFields.push({
-                            fieldName: value.fieldName,
-                            fieldType: value.fieldType
-                        });
-                    });
-                }
-                else {
-                    $scope.itemFields = [{ fieldName: "", fieldType: "" }];
-                }
-            };
-            setFields();
+            $scope.itemFields = [{ fieldName: "", fieldType: "" }];
+            
 
             $scope.addField = function () {
                 $scope.itemFields.push({ fieldName: "", fieldType: "" });
@@ -32,16 +19,6 @@ angular.module("myApp").directive('popupToCreateItem', ['memoryStorageRepository
             var AddItem = function () {
                 memoryStorageRepositoryService.AddItem(Object.assign({}, $scope.itemFields));
                 $scope.isNewItem = false;
-                $scope.ToHideShowPopup();
-            }
-
-            var ChangeItems = function () {
-                
-            }
-
-            $scope.DeleteItems = function () {
-                memoryStorageRepositoryService.DeleteItems();
-                setFields();
                 $scope.ToHideShowPopup();
             }
 
@@ -60,13 +37,7 @@ angular.module("myApp").directive('popupToCreateItem', ['memoryStorageRepository
                 }
                 else {
                     $scope.formIsInvalid = false;
-
-                    if (action === 'add'){
-                        AddItem();
-                    }
-                    else {
-                        ChangeItems();
-                    }
+                    AddItem();
                 }
             }
         }

@@ -39,9 +39,7 @@
                 <a class="btn btn-primary btn-sm" ng-click="addField()" role="button">add field</a>
             </div>
 
-            <a data-ng-if="isNewTable" data-ng-click="checkFormValidity(itemsForm, 'add')" class="button transparent-dark small-button right" style="margin: 10px 0;">Add field</a>
-            <a data-ng-if="!isNewTable" data-ng-click="checkFormValidity(itemsForm, 'change')" class="button transparent-dark small-button right" style="margin: 10px 0;">Change</a>
-            <a data-ng-if="!isNewTable" data-ng-click="DeleteItems()" class="button transparent-dark small-button left" style="margin: 10px 0;">Delete table</a>
+            <a data-ng-if="isNewTable" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Add fields</a>
             
             <div ng-show="formIsInvalid" class="right" style="color: red; margin: 15px 5px;" >Fill all fields</div>
         </ng-form>

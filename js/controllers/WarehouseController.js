@@ -10,6 +10,7 @@ angular.module("myApp").controller('WarehouseController',
             var AddNewValueToItems = memoryStorageRepositoryService.AddNewValueToItems;
             var DeleteValuesFromItems = memoryStorageRepositoryService.DeleteValuesFromItems;
             var SaveValuesChangesInItems = memoryStorageRepositoryService.SaveValuesChangesInItems;
+            var DeleteTable = memoryStorageRepositoryService.DeleteItems;
 
             $scope.addNewValueToItems = function () {
                 $(document).on("click", ".add-new-item", function () {
@@ -110,7 +111,7 @@ angular.module("myApp").controller('WarehouseController',
                     }
                 });
             };
-
+            
             $scope.checkFieldValidity = function (item) {
                 if (item.$error.required && item.$dirty) {
                     return true;
@@ -148,6 +149,12 @@ angular.module("myApp").controller('WarehouseController',
                 $scope.isShowPopup = !$scope.isShowPopup;
                 $scope.isNewTable = $scope.warehouse.items ? false : true;
             };
+
+            $scope.DeleteItems = function () {
+                DeleteTable();
+                $scope.isNewTable = true;
+                $scope.itemFields = [{ fieldName: "", fieldType: "" }];
+            }
 
             $scope.getItemsOfWarehouse = function () {
                 if ($scope.warehouse.items !== undefined) {

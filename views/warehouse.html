@@ -4,7 +4,9 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
-                <h2><b>{{warehouse.name}}</b></h2>
+                <h2>
+                    <b>{{warehouse.name}}</b>
+                </h2>
             </div>
             <div class="col-sm-4">
                 <button ng-click="AddColumns()" type="button" id="addNewButton" class="btn btn-info add-new">
@@ -22,8 +24,18 @@
         <tbody>
             <tr ng-repeat="itemId in getItemsOfWarehouse()">
                 <td ng-repeat="value in warehouse.items">
-                    <div ng-show="!isEditing">{{value.value[itemId]}}</div>
-                    <input class="form-control" ng-show="isEditing" type="text" value="{{value.value[itemId]}}">
+                    <div ng-show="value.fieldType != 'Boolean'">
+                        <div ng-show="!isEditing">{{value.value[itemId]}}</div>
+                        <input class="form-control" ng-show="isEditing" type="text" value="{{value.value[itemId]}}">
+                    </div>
+
+                    <div ng-show="value.fieldType == 'Boolean'">
+                        <div ng-show="!isEditing">
+                            <div ng-show="value.value[itemId]" class="success-symbol">&#10004;</div>
+                            <div ng-show="!value.value[itemId]" class="failure-symbol">&#10008;</div>
+                        </div>
+                        <input type="checkbox" ng-show="isEditing" ng-model="value.value[itemId]" value="{{value.value[itemId]}}">
+                    </div>
                     <div class="error-message"></div>
                 </td>
                 <td>
@@ -60,5 +72,5 @@
 </div>
 
 <button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
-<button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Change table</button>
+<button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="DeleteItems()">Delete table</button>
 <div popup-to-create-item ng-show="isShowPopup"></div>

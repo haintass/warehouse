@@ -10,7 +10,8 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
         controller: 'MyWarehousesController'
     })
     .when('/goods', {
-        templateUrl: 'views/goods.html'
+        templateUrl: 'views/goods.html',
+        controller: 'GoodsController'
     })
     .when('/warehouse', {
         templateUrl: 'views/warehouse.html',
