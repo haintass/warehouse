@@ -79,7 +79,7 @@ angular.module("myApp").controller('WarehouseController',
 
                     $scope.$apply();
                 });
-            };
+            }; 
 
             //TODO: fix input/text mode
             $scope.SaveChanges = function () {
