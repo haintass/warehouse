@@ -81,6 +81,7 @@ angular.module("myApp").controller('WarehouseController',
                 });
             };
 
+            //TODO: fix input/text mode
             $scope.SaveChanges = function () {
                 $(document).on("click", ".add-changes", function () {
                     if (this.dataset.valueid) {

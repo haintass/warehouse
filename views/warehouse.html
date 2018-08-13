@@ -51,6 +51,7 @@
                 </td>
             </tr>
             <tr ng-show="isNewRow">
+                <!-- TODO: logic for bool types -->
                 <td ng-repeat="itemId in getRowsOfTable() track by $index">
                     <input type="text" class="form-control">
                     <div class="error-message"></div>
