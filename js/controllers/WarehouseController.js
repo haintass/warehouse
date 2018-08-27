@@ -6,7 +6,7 @@ angular.module("myApp").controller('WarehouseController',
             $scope.isEditing = false;
             $scope.isNewRow = false;
             $scope.isNewTable = $scope.warehouse.items ? false : true;
-
+$scope.testNumber = 146;
             var AddNewValueToItems = memoryStorageRepositoryService.AddNewValueToItems;
             var DeleteValuesFromItems = memoryStorageRepositoryService.DeleteValuesFromItems;
             var SaveValuesChangesInItems = memoryStorageRepositoryService.SaveValuesChangesInItems;
@@ -158,6 +158,7 @@ angular.module("myApp").controller('WarehouseController',
             }
 
             $scope.getItemsOfWarehouse = function () {
+                //if (!$scope.warehouse.items) {
                 if ($scope.warehouse.items !== undefined) {
                     if ($scope.warehouse.items[0].value !== undefined) {
                         var itemsCount = [];
@@ -169,6 +170,10 @@ angular.module("myApp").controller('WarehouseController',
                     return [];
                 }
                 return [];
+
+                //[ {isEditing: false, item:{name...count...price...}} ]
+                
+
             };
 
             $scope.getRowsOfTable = function () {
