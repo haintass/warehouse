@@ -1,6 +1,6 @@
 <h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
 
-<div ng-if="warehouse.items" class="container" style="border: 1px solid red">
+<div ng-if="warehouse.items" class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
@@ -14,34 +14,19 @@
             </div>
         </div>
     </div>
-
-    <div>
-        <h1>Number test</h1>
-        <input ng-model="testNumber" number-text-box />
-    </div>
-
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th ng-repeat="item in warehouse.items">{{item.fieldName}}</th>
+                <th ng-repeat="item in warehouse.itemsName">{{item}}</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="itemId in getItemsOfWarehouse()" style="border: 6px solid green !important">
-                <td ng-repeat="value in warehouse.items">
-                    <div ng-show="value.fieldType != 'Boolean'">
-                        <div ng-show="!isEditing">{{value.value[itemId]}}</div>
+            <tr ng-repeat="item in warehouse.items[0]">
+                <td ng-repeat="value in warehouse.items track by $index">
+                        <div ng-show="!isEditing">{{value[$index]}}</div>
                         <input class="form-control" ng-show="isEditing" type="text" value="{{value.value[itemId]}}">
-                    </div>
-
-                    <div ng-show="value.fieldType == 'Boolean'">
-                        <div ng-show="!isEditing">
-                            <div ng-show="value.value[itemId]" class="success-symbol">&#10004;</div>
-                            <div ng-show="!value.value[itemId]" class="failure-symbol">&#10008;</div>
-                        </div>
-                        <input type="checkbox" ng-show="isEditing" ng-model="value.value[itemId]" value="{{value.value[itemId]}}">
-                    </div>
+                    
                     <div class="error-message"></div>
                 </td>
                 <td>

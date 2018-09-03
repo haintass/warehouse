@@ -1,5 +1,16 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
+    var itemsName = ["Name", "Count", "Price", "Just bool"]
+    
     var items = [
+        [
+            ["motherboard", "RAM", "keyboard"],
+            [20, 50, 10],
+            [5000, 2000, 2500],
+            [true, false, false]            
+        ]
+    ];
+
+    var oldItems = [
         [
             {
                 fieldName: "Name", fieldType: "String", id: 0,
@@ -24,6 +35,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         {
             name: "First warehouse",
             id: 0,
+            itemsName: itemsName,
             items: items[0]  
         },
         {
