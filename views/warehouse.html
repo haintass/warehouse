@@ -1,6 +1,6 @@
-<h3 ng-if="!warehouse.items">Your warehous is empty.</h3>
+<h3 ng-if="!warehouse.tables[0].items">Your warehouse is empty.</h3>
 
-<div ng-if="warehouse.items" class="container">
+<div ng-if="warehouse.tables[0].items" class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
@@ -8,6 +8,11 @@
                     <b>{{warehouse.name}}</b>
                 </h2>
             </div>
+            <div class="col-sm-8">
+                    <h5>
+                        <b>{{warehouse.tables[0].name}}</b>
+                    </h5>
+                </div>
             <div class="col-sm-4">
                 <button ng-click="AddColumns()" type="button" id="addNewButton" class="btn btn-info add-new">
                     <i class="fa fa-plus"></i> Add New</button>
@@ -17,12 +22,12 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th ng-repeat="item in warehouse.itemsName">{{item}}</th>
+                <th ng-repeat="item in itemsName">{{item}}</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in warehouse.items">
+            <tr ng-repeat="item in warehouse.tables[0].items">
                 <td ng-repeat="value in item">
                         <div ng-show="!item.isEditing">{{value}}</div>
                         <input class="form-control" ng-show="item.isEditing" type="text" value="{{value}}">
@@ -43,7 +48,7 @@
             </tr>
             <tr ng-show="isNewRow">
                 <!-- TODO: logic for bool types -->
-                <td ng-repeat="value in warehouse.items[0]">
+                <td ng-repeat="value in warehouse.tables[0].items[0]">
                     <input type="text" class="form-control">
                     <div class="error-message"></div>
                 </td>
@@ -57,12 +62,12 @@
                 </td>
             </tr>
         </tbody>
-        <caption ng-hide="warehouse.items[warehouse.id]" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+        <caption ng-hide="warehouse.tables[0].items[warehouse.id]" style="caption-side: bottom; text-align: center; background: #F8F8F8">
             <h3>Table is empty</h3>
         </caption>
     </table>
 </div>
 
-<button ng-show="isNewTable" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create table</button>
-<button ng-show="!isNewTable" type="button" class="btn btn-secondary" ng-click="DeleteItems()">Delete table</button>
+<button ng-show="isEmptyWarehouse" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup;">Add table</button>
+<button ng-show="!isEmptyWarehouse" type="button" class="btn btn-secondary" ng-click="DeleteItems()">Delete table</button>
 <div popup-to-create-item ng-show="isShowPopup"></div>

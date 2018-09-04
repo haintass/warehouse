@@ -1,48 +1,24 @@
 <div id="popupItems" data-ng-show="isShowPopup">    
-    <div class="overlay" data-ng-click="ToHideShowPopup()"></div>
+    <div class="overlay" data-ng-click="isShowPopup = !isShowPopup"></div>
     <div class="visible">
-        <a data-ng-click="ToHideShowPopup()" class="close popup">X</a>
-        <h4 data-ng-if="isNewItem" class="title popup">Add Item</h4>
-        <h4 data-ng-if="!isNewItem" class="title popup">Change Item</h4>
-        <ng-form name="itemsForm">
+        <a data-ng-click="isShowPopup = !isShowPopup" class="close popup">X</a>
+        <h4 data-ng-if="isNewTable" class="title popup">Add Item</h4>
+        <h4 data-ng-if="!isNewTable" class="title popup">Change Item</h4>
+        <form  action="#" method="post" name="addItemForm">
         <div class="content popup">
             <div class="mb-3">
-                <div ng-repeat="item in itemFields track by $index">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">field name</label>
-
-                                <!-- <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.itemName{{$index}})">
-                                    <div class="show show-left">required</div>
-                                </div> -->
-                            </div>
-                            <input type="text" name="itemName{{$index}}" ng-model="itemFields[$index].fieldName" class="form-control" required>
-
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">field type</label>
-                                
-                                <!-- <div class="error-validation-popup" ng-show="checkFieldValidity(itemsForm.fieldType{{$index}})">
-                                    <div class="show show-right">required</div>
-                                </div> -->
-                            </div>
-                            <select class="custom-select" name="fieldType{{$index}}" ng-model="itemFields[$index].fieldType" required>
-                                <option value="">Choose...</option>
-                                <option value="Number">Number</option>
-                                <option value="String">String</option>
-                               <option value="Boolean">Boolean</option>
-                            </select>
-                            <a class="close" ng-click="removeField($index)">X</a>
+                <div class="item-of-form-group">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Table name</label>
                         </div>
+                        <input type="text" name="tableName" ng-model="tableName" class="form-control" required>                      
+                    </div>
+                    <div messages-of-invalid-fields item-of-validation="addItemForm.tableName.$error" class="right"></div> 
                 </div>
-                    
-                <div style="clear: both"></div>
-                <a class="btn btn-primary btn-sm" ng-click="addField()" role="button">add field</a>
             </div>
 
-            <a data-ng-if="isNewTable" data-ng-click="checkFormValidity(itemsForm)" class="button transparent-dark small-button right" style="margin: 10px 0;">Add fields</a>
-            
-            <div ng-show="formIsInvalid" class="right" style="color: red; margin: 15px 5px;" >Fill all fields</div>
-        </ng-form>
-        </div>
+            <div style="clear: both"></div><a data-ng-if="isNewTable" data-ng-click="" class="btn btn-secondary right" style="margin: 10px 0;">Create</a></div>
+        </form>
     </div>
 </div>

@@ -1,11 +1,19 @@
 angular.module("myApp").controller('WarehouseController',
     ['$scope', 'memoryStorageRepositoryService',
         function ($scope, memoryStorageRepositoryService) {
-            
+            //TO DO:
+            // create table with name
+            // delete table
+            // add new items
+            // remove items
+            // change items
+            // validation
             //[ {isEditing: false, item:{name...count...price...}} ]
 
             
+            $scope.itemsName = memoryStorageRepositoryService.itemsName;
             $scope.warehouse = memoryStorageRepositoryService.GetCurrentWarehouse();
+            $scope.isEmptyWarehouse = $scope.warehouse.tables ? $scope.warehouse.tables.length == 0 ? true : false : true;
             $scope.isShowPopup = false;
             $scope.isNewRow = false;
 
@@ -18,148 +26,5 @@ angular.module("myApp").controller('WarehouseController',
             var SaveValuesChangesInItems = memoryStorageRepositoryService.SaveValuesChangesInItems;
             var DeleteTable = memoryStorageRepositoryService.DeleteItems;
 
-            $scope.addNewValueToItems = function () {
-                $(document).on("click", ".add-new-item", function () {
-                    var newItems = [];
-                    var empty = false;
-                    var input = $(this).parents("tr").find('input[type="text"]');
-
-                    input.each(function () {
-                        if (!$(this).val()) {
-                            $(this).addClass("error-validation-input");
-                            $(this).nextAll().addClass("required");
-                            $(this).nextAll().removeClass("incorrect-type");
-
-                            empty = true;
-                        } else {
-                            $(this).removeClass("error-validation-input");
-                            $(this).nextAll().removeClass("required");
-                        }
-                    });
-                    $(this).parents("tr").find(".error-validation-input").first().focus();
-
-                    if (!empty) {
-                        input.each(function (key, item) {
-                            if (checkTypeValueField(item.value, $scope.warehouse.items[key].fieldType)) {
-                                $(this).removeClass("error-validation-input");
-                                $(this).nextAll().removeClass("incorrect-type");
-                            }
-                            else {
-                                $(this).addClass("error-validation-input");
-                                $(this).nextAll().addClass("incorrect-type");
-                            }
-                        });
-
-                        if (!input.hasClass('error-validation-input')) {
-                            _.forEach(input, function (item, key) {
-                                newItems.push(item.value);
-                                item.value = "";
-                            });
-                            AddNewValueToItems(newItems);
-
-                            $("#addNewButton").prop('disabled', false);
-                            $scope.isNewRow = !$scope.isNewRow;
-                            $scope.$apply();
-                        }
-                    }
-                });
-            };
-
-            $scope.DeleteItemsInRow = function () {
-                $(document).on("click", ".delete", function () {
-                    if (this.dataset.valueid) {
-                        var valueId = +this.dataset.valueid;
-
-                        DeleteValuesFromItems($scope.warehouse.items, valueId);
-                    }
-                    else {
-                        $scope.isNewRow = false;
-                        $("#addNewButton").prop('disabled', false);
-                        var input = $(this).parents("tr").find('input[type="text"]');
-                        input.nextAll().removeClass("required");
-
-                        _.forEach(input, function (value) {
-                            value.value = "";
-                        });
-                    }
-
-                    $scope.$apply();
-                });
-            }; 
-
-            //TODO: fix input/text mode
-            $scope.SaveChanges = function (item) {
-                $(document).on("click", ".add-changes", function () {
-                    if (this.dataset.valueid) {
-                        var valueId = +this.dataset.valueid;
-                        var inputs = $(this).parents('tr').find('input[type="text"]');
-
-                        inputs.each(function (key, item) {
-                            if (!$(this).val()) {
-                                $(this).addClass("error-validation-input");
-                                $(this).nextAll().removeClass("incorrect-type");
-                                $(this).nextAll().addClass("required");
-                            } else {
-                                $(this).removeClass("error-validation-input");
-                                $(this).nextAll().removeClass("required");
-
-                                if (checkTypeValueField(item.value, $scope.warehouse.items[key].fieldType)) {
-                                    $(this).removeClass("error-validation-input");
-                                    $(this).nextAll().removeClass("incorrect-type");
-                                }
-                                else {
-                                    $(this).addClass("error-validation-input");
-                                    $(this).nextAll().addClass("incorrect-type");
-                                }
-                            }
-
-                            SaveValuesChangesInItems(item.value, key, valueId);
-                        });
-                    }
-                });
-            };
             
-            $scope.checkFieldValidity = function (item) {
-                if (item.$error.required && item.$dirty) {
-                    return true;
-                }
-                else {
-                    false;
-                }
-            }
-
-            var checkTypeValueField = function (value, type) {
-                switch (type) {
-                    case "String":
-                        return typeof value === "string";
-                        break;
-                    case "Number":
-                        return !isNaN(parseFloat(value)) && isFinite(value);
-                        break;
-                    case "Boolean":
-                        return typeof value === "boolean";
-                        break;
-                }
-            };
-
-            $scope.AddColumns = function () {
-                $scope.isNewRow = !$scope.isNewRow;
-                var input = $("table.table tr:last").find('input[type="text"]');
-                $("#addNewButton").prop('disabled', true);
-
-                input.each(function () {
-                    $(this).removeClass("error-validation-input");
-                });
-            }
-
-            $scope.ToHideShowPopup = function () {
-                $scope.isShowPopup = !$scope.isShowPopup;
-                $scope.isNewTable = $scope.warehouse.items ? false : true;
-            };
-
-            $scope.DeleteItems = function () {
-                DeleteTable();
-                $scope.isNewTable = true;
-                $scope.itemFields = [{ fieldName: "", fieldType: "" }];
-            }
         }])

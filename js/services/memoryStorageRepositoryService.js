@@ -1,6 +1,5 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
-    var itemsName = ["Name", "Count", "Price", "Just bool"]
-    
+       
     function createTrueItem(name, count, price, isMadeInChina){
         return {
             name:name, 
@@ -52,8 +51,12 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         {
             name: "First warehouse",
             id: 0,
-            itemsName: itemsName,
-            items: items[0]  
+            tables: [
+                {
+                    name: "First table",
+                    items: items[0]
+                }
+            ]
         },
         {
             name: "Second warehouse",
@@ -70,7 +73,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     ];
     
     var warehouseId = warehouses.length;
-    var currentWarehouseId = 0;
+    var currentWarehouseId = 1;
 
     var setCorrectType = function (value, type) {
         if (type === "Number") {
@@ -84,6 +87,8 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     }
 
     return {
+        itemsName: ["Name", "Count", "Price", "Just bool"],
+
         SetCurrentWarehouseId: function (id) {
             currentWarehouseId = id;
         },
