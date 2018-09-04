@@ -1,12 +1,50 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
     var itemsName = ["Name", "Count", "Price", "Just bool"]
     
+    function createTrueItem(name, count, price, isMadeInChina){
+        return {
+            name:name, 
+            count:count, 
+            price:price,
+            isMadeInChina:isMadeInChina, 
+
+            getTotalPrice: getTotalPrice,
+            getDetails: getDetails
+        }
+
+        function getTotalPrice(){
+            if(this.isMadeInChina){
+                return this.count * this.price * 0.5;
+            }
+
+            return this.count * this.price;
+        }
+
+        function getDetails(){
+            return `Name: ${this.name}. And total price = ${ this.getTotalPrice() } `;
+        }
+    }
+
+    /* Out World */
+    var trueItems = [
+        createTrueItem("motherboard", 20, 5000, true),
+        createTrueItem("RAM", 50, 2000, false),
+        createTrueItem("keyboard", 20, 5000, true),
+    ];
+
+    var sum = trueItems[0].getTotalPrice() +  trueItems[1].getTotalPrice() +  trueItems[2].getTotalPrice();
+
+
+
+
+
     var items = [
         [
-            ["motherboard", "RAM", "keyboard"],
-            [20, 50, 10],
-            [5000, 2000, 2500],
-            [true, false, false]            
+            ["motherboard", 20, 5000, true],
+            ["RAM", 50, 2000, false],
+            ["Keyboard", 10, 2500, false],
+            ["Mouse", 40, 1500, true],
+            ["Monitor", 250, 12500, true]
         ]
     ];
 
@@ -53,7 +91,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     ];
     
     var warehouseId = warehouses.length;
-    var currentWarehouseId = null;
+    var currentWarehouseId = 0;
 
     var setCorrectType = function (value, type) {
         if (type === "Number") {

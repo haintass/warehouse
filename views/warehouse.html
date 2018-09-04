@@ -22,10 +22,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in warehouse.items[0]">
-                <td ng-repeat="value in warehouse.items track by $index">
-                        <div ng-show="!isEditing">{{value[$index]}}</div>
-                        <input class="form-control" ng-show="isEditing" type="text" value="{{value.value[itemId]}}">
+            <tr ng-repeat="item in warehouse.items">
+                <td ng-repeat="value in item">
+                        <div ng-show="!isEditing">{{value}}</div>
+                        <input class="form-control" ng-show="isEditing" type="text" value="{{value}}">
                     
                     <div class="error-message"></div>
                 </td>
