@@ -24,26 +24,26 @@
         <tbody>
             <tr ng-repeat="item in warehouse.items">
                 <td ng-repeat="value in item">
-                        <div ng-show="!isEditing">{{value}}</div>
-                        <input class="form-control" ng-show="isEditing" type="text" value="{{value}}">
+                        <div ng-show="!item.isEditing">{{value}}</div>
+                        <input class="form-control" ng-show="item.isEditing" type="text" value="{{value}}">
                     
                     <div class="error-message"></div>
                 </td>
                 <td>
-                    <a ng-show="isEditing" ng-click="SaveChanges()" data-valueId="{{itemId}}" class="add add-changes" title="Add" data-toggle="tooltip">
+                    <a ng-show="item.isEditing" ng-click="SaveChanges(item)" class="add add-changes" title="Add" data-toggle="tooltip">
                         <i class="material-icons">&#xE03B;</i>
                     </a>
-                    <a ng-show="!isEditing" ng-click="isEditing = !isEditing" class="edit" title="Edit" data-toggle="tooltip">
+                    <a ng-show="!item.isEditing" ng-click="item.isEditing = !item.isEditing" class="edit" title="Edit" data-toggle="tooltip">
                         <i class="material-icons">&#xE254;</i>
                     </a>
-                    <a ng-click="DeleteItemsInRow()" data-valueId="{{itemId}}" class="delete" title="Delete" data-toggle="tooltip">
+                    <a ng-click="DeleteItemsInRow()" class="delete" title="Delete" data-toggle="tooltip">
                         <i class="material-icons">&#xE872;</i>
                     </a>
                 </td>
             </tr>
             <tr ng-show="isNewRow">
                 <!-- TODO: logic for bool types -->
-                <td ng-repeat="itemId in getRowsOfTable() track by $index">
+                <td ng-repeat="value in warehouse.items[0]">
                     <input type="text" class="form-control">
                     <div class="error-message"></div>
                 </td>
@@ -57,7 +57,7 @@
                 </td>
             </tr>
         </tbody>
-        <caption ng-show="getItemsOfWarehouse().length == 0" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+        <caption ng-hide="warehouse.items[warehouse.id]" style="caption-side: bottom; text-align: center; background: #F8F8F8">
             <h3>Table is empty</h3>
         </caption>
     </table>

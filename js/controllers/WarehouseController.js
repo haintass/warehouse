@@ -1,12 +1,18 @@
 angular.module("myApp").controller('WarehouseController',
     ['$scope', 'memoryStorageRepositoryService',
         function ($scope, memoryStorageRepositoryService) {
+            
+            //[ {isEditing: false, item:{name...count...price...}} ]
+
+            
             $scope.warehouse = memoryStorageRepositoryService.GetCurrentWarehouse();
             $scope.isShowPopup = false;
-            $scope.isEditing = false;
             $scope.isNewRow = false;
-            $scope.isNewTable = $scope.warehouse.items ? false : true;
-$scope.testNumber = 146;
+
+            _.forEach($scope.warehouse.items, function (value) {
+                value.isEditing = false;
+            })
+            
             var AddNewValueToItems = memoryStorageRepositoryService.AddNewValueToItems;
             var DeleteValuesFromItems = memoryStorageRepositoryService.DeleteValuesFromItems;
             var SaveValuesChangesInItems = memoryStorageRepositoryService.SaveValuesChangesInItems;
@@ -82,7 +88,7 @@ $scope.testNumber = 146;
             }; 
 
             //TODO: fix input/text mode
-            $scope.SaveChanges = function () {
+            $scope.SaveChanges = function (item) {
                 $(document).on("click", ".add-changes", function () {
                     if (this.dataset.valueid) {
                         var valueId = +this.dataset.valueid;
@@ -156,33 +162,4 @@ $scope.testNumber = 146;
                 $scope.isNewTable = true;
                 $scope.itemFields = [{ fieldName: "", fieldType: "" }];
             }
-
-            $scope.getItemsOfWarehouse = function () {
-                //if (!$scope.warehouse.items) {
-                if ($scope.warehouse.items !== undefined) {
-                    if ($scope.warehouse.items[0].value !== undefined) {
-                        var itemsCount = [];
-                        for (var key in $scope.warehouse.items[0].value) {
-                            itemsCount.push(key);
-                        };
-                        return itemsCount;
-                    }
-                    return [];
-                }
-                return [];
-
-                //[ {isEditing: false, item:{name...count...price...}} ]
-                
-
-            };
-
-            $scope.getRowsOfTable = function () {
-                if ($scope.warehouse.items !== undefined) {
-                    var count = [];
-                    for (var key in $scope.warehouse.items) {
-                        count.push(key);
-                    };
-                    return count;
-                }
-            };
         }])

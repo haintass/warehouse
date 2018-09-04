@@ -48,27 +48,6 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         ]
     ];
 
-    var oldItems = [
-        [
-            {
-                fieldName: "Name", fieldType: "String", id: 0,
-                value: ["motherboard", "RAM", "keyboard", "monitor"]
-            },
-            {
-                fieldName: "Count", fieldType: "Number", id: 1,
-                value: [20, 50, 10, 15]
-            },
-            {
-                fieldName: "Price", fieldType: "Number", id: 2,
-                value: [5000, 2000, 2500, 7000]
-            },
-            {
-                fieldName: "bool test", fieldType: "Boolean", id: 3,
-                value: [true, false, false, true]
-            }
-        ]
-    ];
-
     var warehouses = [
         {
             name: "First warehouse",
