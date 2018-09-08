@@ -1,6 +1,4 @@
-<h3 ng-if="!warehouse.tables[0].items">Your warehouse is empty.</h3>
-
-<div ng-if="warehouse.tables[0].items" class="container">
+<div class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
@@ -14,7 +12,7 @@
                     </h5>
                 </div>
             <div class="col-sm-4">
-                <button ng-click="AddColumns()" type="button" id="addNewButton" class="btn btn-info add-new">
+                <button ng-click="isNewRow = !isNewRow" type="button" id="addNewButton" class="btn btn-info add-new">
                     <i class="fa fa-plus"></i> Add New</button>
             </div>
         </div>
@@ -47,10 +45,20 @@
                 </td>
             </tr>
             <tr ng-show="isNewRow">
-                <!-- TODO: logic for bool types -->
-                <td ng-repeat="value in warehouse.tables[0].items[0]">
+                <td>
                     <input type="text" class="form-control">
-                    <div class="error-message"></div>
+                </td>
+                <td>
+                    <input type="number" class="form-control">
+                </td>
+                <td>
+                    <input type="number" class="form-control">
+                </td>
+                <td>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
+                    </div>
                 </td>
                 <td>
                     <a ng-click="addNewValueToItems()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
@@ -62,12 +70,8 @@
                 </td>
             </tr>
         </tbody>
-        <caption ng-hide="warehouse.tables[0].items[warehouse.id]" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+        <caption ng-show="TableIsEmpty()" style="caption-side: bottom; text-align: center; background: #F8F8F8">
             <h3>Table is empty</h3>
         </caption>
     </table>
 </div>
-
-<button ng-show="isEmptyWarehouse" type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup;">Add table</button>
-<button ng-show="!isEmptyWarehouse" type="button" class="btn btn-secondary" ng-click="DeleteItems()">Delete table</button>
-<div popup-to-create-item ng-show="isShowPopup"></div>

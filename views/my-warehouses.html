@@ -1,20 +1,66 @@
-<div ng-if="warehouses.length > 0">
-    <h1>Your warehouses</h1>
-    <table class="table-hover">
+<div>
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>
+                    <b>Your warehouses</b>
+                </h1>
+            </div>
+            <div class="col-sm-4" style="margin-top: 20px;">
+                <button ng-click="NewRow()" type="button" id="addNewButton" class="btn btn-info add-new">
+                    <i class="fa fa-plus"></i> Add New</button>
+            </div>
+        </div>
+    </div>
+<table class="table table-bordered">
   <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Id</th>
-    </tr>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Id</th>
+        <th>actions</th>
+      </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="warehouse in warehouses" ng-click="ToHideShowPopup($index)">
-      <td>{{warehouse.name}}</td>
-      <td>{{warehouse.id}}</td>
-    </tr>
+      <tr ng-repeat="warehouse in warehouses" style="cursor: pointer;">
+          <td ng-show="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.name}}</td>
+          <td ng-show="warehouses[$index].isEditMode"><input class="form-control" type="text" ng-model="warehouseInfo.name"></td>
+
+          <td ng-show="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.id}}</td>
+          <td ng-show="warehouses[$index].isEditMode">{{warehouse.id}}</td>
+          <td>
+              <a ng-show="!warehouses[$index].isEditMode" ng-click="ChangeName($index)" class="edit" title="Edit" data-toggle="tooltip" data-original-title="Edit">
+                  <i class="material-icons">&#xE254;</i>
+              </a>
+              <a ng-show="warehouses[$index].isEditMode" ng-click="SaveName(warehouseInfo.name, $index)" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
+                  <i class="material-icons">&#xE03B;</i>
+              </a>
+
+              <a ng-click="DeleteWarehouse($index)" class="delete" title="Delete" data-toggle="tooltip">
+                  <i class="material-icons">&#xE872;</i>
+              </a>
+          </td>
+      </tr>
+      
+      <tr ng-show="isNewRow">
+          <td>
+              <input type="text" ng-model="warehouseInfo.name" class="form-control">
+          </td>
+          <td>
+              id
+          </td>
+          <td>
+              <a ng-click="AddWarehouse()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
+                  <i class="material-icons">&#xE03B;</i>
+              </a>
+              <a class="delete" title="Delete" data-toggle="tooltip">
+                  <i class="material-icons">&#xE872;</i>
+              </a>
+          </td>
+      </tr>
   </tbody>
+  <caption ng-show="IsEmptyWarehouse()" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+      <h3>Table is empty</h3>
+  </caption>
 </table>
 </div>
-<h1 ng-if="warehouses.length == 0">You don't have warehouses</h1>
-<button type="button" class="btn btn-secondary" ng-click="isShowPopup = !isShowPopup">Create warehouse</button>
-<div popup-to-create-warehouse ng-show="isShowPopup"></div>
+<div ng-if="isShowPopup" question-popup></div>

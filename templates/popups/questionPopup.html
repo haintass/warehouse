@@ -1,0 +1,15 @@
+<div class="popup">
+        <div class="overlay" data-ng-click="CloseOpenQuestionPopup()"></div>
+        <div class="visible">
+            <a data-ng-click="CloseOpenQuestionPopup()" class="close popup">X</a>
+            <h3 class="title popup">Are you sure?</h3>
+            <div class="content popup">
+                <h5>Do you want open this warehouse?</h5>
+
+                <div style="text-align: right; padding-bottom: 10px;">
+                        <a href="#!warehouse"><button data-ng-click="SetWarehouseId()" type="button" class="btn btn-outline-success">Yes</button></a>
+                    <button data-ng-click="CloseOpenQuestionPopup()" type="button" class="btn btn-outline-danger">No</button>
+                </div>
+            </div>
+        </div>
+    </div>

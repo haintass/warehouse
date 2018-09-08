@@ -3,48 +3,75 @@ angular.module("myApp").controller('MyWarehousesController',
     function($scope, memoryStorageRepositoryService) {
         $scope.isShowPopup = false;
         $scope.isNewItem = true;
-        $scope.item = {};
+        $scope.isNewRow = false;
+        $scope.warehouseInfo = {
+            name: "",
+            id: null
+        };
         
-        var keyCurrentItem;
-        var changedItem = {};
-        
-        $scope.ToHideShowPopup = function(key) {
-            keyCurrentItem = key;
-            if (key === undefined) {
-                $scope.item = {};
-                $scope.isNewItem = true;
-            }
-            else {
-                $scope.isNewItem = false;
-                $scope.item = Object.assign({}, $scope.warehouses[keyCurrentItem])
-            }
-            
-            $scope.isShowPopup = !$scope.isShowPopup;
-        }
-        
-        $scope.warehouses = memoryStorageRepositoryService.GetWarehouses();
+        $scope.warehouses = memoryStorageRepositoryService.GetWarehouses().slice();
         var DeleteWarehouse = memoryStorageRepositoryService.DeleteWarehouse;
         var AddWarehouse = memoryStorageRepositoryService.AddWarehouse;
         var ChangeWarehouse = memoryStorageRepositoryService.ChangeWarehouse;
+
+        DisableEditMode();        
         
+        $scope.NewRow = function() {
+            DisableEditMode();
+            $scope.warehouseInfo.name = "";
+            $scope.isNewRow = !$scope.isNewRow;
+        };
+
         $scope.AddWarehouse = function() {
-            AddWarehouse(Object.assign({}, $scope.item));
-            $scope.ToHideShowPopup();
-            $scope.item = {};
-        }
+            $scope.warehouses = AddWarehouse($scope.warehouseInfo.name);
+            $scope.NewRow();
+            $scope.warehouseInfo.name = "";
+        };
         
-        $scope.ChangeWarehouse = function() {
-            changedItem = Object.assign({}, $scope.item);
-            ChangeWarehouse(changedItem);
-            $scope.ToHideShowPopup();
-        }
+        $scope.ChangeName = function(id) {
+            _.forEach($scope.warehouses, function(value) {
+                value.isEditMode = value.id === id ? value.isEditMode : false;
+            });
+            
+            if ($scope.isNewRow){
+                $scope.NewRow();
+            }
+
+            $scope.warehouseInfo.name = $scope.warehouses[id].name;
+            $scope.warehouses[id].isEditMode = !$scope.warehouses[id].isEditMode;
+        };
+
+        $scope.SaveName = function (newName, id) {
+            ChangeWarehouse(newName, id);
+            $scope.ChangeName(id);
+            $scope.warehouseInfo.name = "";
+        };
+
+        $scope.DeleteWarehouse = function(id){
+            $scope.warehouses = DeleteWarehouse(id);
+        };
+
+        $scope.CloseOpenQuestionPopup = function(key) {
+            $scope.isShowPopup = !$scope.isShowPopup;
+
+            if (_.isNumber(key)) {
+                $scope.warehouseInfo.id = key;
+            }
+        };
         
-        $scope.DeleteWarehouse = function(){
-            DeleteWarehouse(keyCurrentItem);
-            $scope.ToHideShowPopup();
+        $scope.SetWarehouseId = function () {
+            memoryStorageRepositoryService.SetCurrentWarehouseId($scope.warehouseInfo.id);
         }
-        
-        $scope.OpenWarehouse = function() {
-            memoryStorageRepositoryService.SetCurrentWarehouseId($scope.item.id);
+
+        $scope.IsEmptyWarehouse = function () {
+            return $scope.warehouses.length === 0 && !$scope.isNewRow;
         }
+
+        function DisableEditMode () {
+            if ($scope.warehouses.length > 0) {
+                _.forEach($scope.warehouses, function (value) {
+                    value.isEditMode = false;
+                })
+            }
+        };
 }])

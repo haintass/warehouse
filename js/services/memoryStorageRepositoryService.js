@@ -1,42 +1,4 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
-       
-    function createTrueItem(name, count, price, isMadeInChina){
-        return {
-            name:name, 
-            count:count, 
-            price:price,
-            isMadeInChina:isMadeInChina, 
-
-            getTotalPrice: getTotalPrice,
-            getDetails: getDetails
-        }
-
-        function getTotalPrice(){
-            if(this.isMadeInChina){
-                return this.count * this.price * 0.5;
-            }
-
-            return this.count * this.price;
-        }
-
-        function getDetails(){
-            return `Name: ${this.name}. And total price = ${ this.getTotalPrice() } `;
-        }
-    }
-
-    /* Out World */
-    var trueItems = [
-        createTrueItem("motherboard", 20, 5000, true),
-        createTrueItem("RAM", 50, 2000, false),
-        createTrueItem("keyboard", 20, 5000, true),
-    ];
-
-    var sum = trueItems[0].getTotalPrice() +  trueItems[1].getTotalPrice() +  trueItems[2].getTotalPrice();
-
-
-
-
-
     var items = [
         [
             ["motherboard", 20, 5000, true],
@@ -54,6 +16,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             tables: [
                 {
                     name: "First table",
+                    id: 0,
                     items: items[0]
                 }
             ]
@@ -73,20 +36,10 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     ];
     
     var warehouseId = warehouses.length;
+
     var currentWarehouseId = 1;
 
-    var setCorrectType = function (value, type) {
-        if (type === "Number") {
-            return +value;
-        }
-        if (type === "Boolean")
-        {
-            return value === "true" ? true : false;
-        }
-        return value;
-    }
-
-    return {
+    var self = {
         itemsName: ["Name", "Count", "Price", "Just bool"],
 
         SetCurrentWarehouseId: function (id) {
@@ -94,70 +47,30 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
 
         GetWarehouses: function () {
-            return warehouses;
+            var allWarehouses = _.cloneDeep(warehouses);
+            return allWarehouses;
         },
 
         GetCurrentWarehouse: function () {
             return warehouses[currentWarehouseId];
         },
 
-        AddWarehouse: function (item) {
-            warehouses.push({ name: item.name, id: warehouseId++ });
+        AddWarehouse: function (name) {
+            warehouses.push({ name: name, id: warehouseId++ });
+            
+            return self.GetWarehouses();
         },
 
-        ChangeWarehouse: function (newItem) {
-            warehouses[newItem.id] = newItem;
+        ChangeWarehouse: function (newName, id) {
+            warehouses[id].name = newName;
         },
 
         DeleteWarehouse: function (key) {
             warehouses.splice(key, 1);
-        },
-
-        GetItems: function () {
-            return items;
-        },
-
-        AddItem: function (newItem) {
-            _.forEach(newItem, function (value, key) {
-                value.id = key;
-            });
-            items.push(newItem);
-            warehouses[currentWarehouseId].items = newItem;
-        },
-
-        ChangeItems: function (oldValue, newValue) {
-            _.isEqual(oldValue[0], newValue[0])
-            warehouses[currentWarehouseId].items = items;
-        },
-
-        DeleteItems: function () {
-            warehouses[currentWarehouseId].items = null;
-        },
-
-        AddNewValueToItems: function (values) {
-            _.forEach(values, function (value, key) {
-                if (!warehouses[currentWarehouseId].items[key].value) {
-                    warehouses[currentWarehouseId].items[key].value = [];
-                }
-
-                value = setCorrectType(value, warehouses[currentWarehouseId].items[key].fieldType);
-
-                warehouses[currentWarehouseId].items[key].value.push(value);
-            })
-        },
-
-        //TODO: FIX ERROR IN EDIT MODE
-        DeleteValuesFromItems: function (values, valueId) {
-            _.forEach(values, function (value, key) {
-                warehouses[currentWarehouseId].items[key].value.splice(valueId, 1);
-            });
-        },
-
-        SaveValuesChangesInItems: function (newValue, itemId, valueId) {
-            if (warehouses[currentWarehouseId].items[itemId].value[valueId] != newValue) {
-                newValue = setCorrectType(newValue, warehouses[currentWarehouseId].items[itemId].fieldType);
-                warehouses[currentWarehouseId].items[itemId].value[valueId] = newValue;
-            }
+            
+            return self.GetWarehouses();
         }
     }
+    
+    return self;
 })
