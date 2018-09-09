@@ -1,19 +1,31 @@
-<div class="container">
+<div ng-if="warehouse.tables" class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
-                <h2>
-                    <b>{{warehouse.name}}</b>
-                </h2>
+                <h1>
+                    <b class="font-weight-normal">{{warehouse.name}}</b>
+                </h1>
             </div>
             <div class="col-sm-8">
-                    <h5>
-                        <b>{{warehouse.tables[0].name}}</b>
-                    </h5>
-                </div>
+                <h4 ng-show="!warehouseInfo.editMode" style="display: inline-block; vertical-align: 3px; margin-right: 10px;">
+                    <b>{{warehouse.tables[warehouseInfo.tableId].name}}</b>
+                </h4>
+                <input ng-show="warehouseInfo.editMode" ng-model="warehouseInfo.tableName" type="text">
+
+
+                <a ng-show="!warehouseInfo.editMode" ng-click="IsEditMode()" class="edit" title="Edit name" data-toggle="tooltip">
+                    <i class="material-icons">&#xE254;</i>
+                </a>
+                <a ng-show="warehouseInfo.editMode" ng-click="ChangeTableName()" class="add add-changes" title="Сonfirm" data-toggle="tooltip">
+                    <i class="material-icons">&#xE03B;</i>
+                </a>
+                <a ng-click="DeleteTable()" class="delete" title="Delete table" data-toggle="tooltip">
+                    <i class="material-icons">&#xE872;</i>
+                </a>
+            </div>
             <div class="col-sm-4">
-                <button ng-click="isNewRow = !isNewRow" type="button" id="addNewButton" class="btn btn-info add-new">
-                    <i class="fa fa-plus"></i> Add New</button>
+                <button ng-click="CancelNewItems()" type="button" id="addNewButton" class="btn btn-info add-new">
+                    <i class="fa fa-plus"></i> New Item</button>
             </div>
         </div>
     </div>
@@ -25,8 +37,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in warehouse.tables[0].items">
-                <td ng-repeat="value in item">
+            <tr ng-repeat="item in warehouse.tables[warehouseInfo.tableId].items">
+                <td ng-repeat="value in item track by $index">
                         <div ng-show="!item.isEditing">{{value}}</div>
                         <input class="form-control" ng-show="item.isEditing" type="text" value="{{value}}">
                     
@@ -46,32 +58,52 @@
             </tr>
             <tr ng-show="isNewRow">
                 <td>
-                    <input type="text" class="form-control">
+                    <input ng-model="warehouseInfo.items.name" type="text" class="form-control">
                 </td>
                 <td>
-                    <input type="number" class="form-control">
+                    <input ng-model="warehouseInfo.items.count" value="" type="number" class="form-control">
                 </td>
                 <td>
-                    <input type="number" class="form-control">
+                    <input ng-model="warehouseInfo.items.price" type="number" class="form-control">
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <input ng-model="warehouseInfo.items.bool" type="checkbox" class="custom-control-input" id="defaultUnchecked">
                         <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
                     </div>
                 </td>
                 <td>
-                    <a ng-click="addNewValueToItems()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
+                    <a ng-click="AddItemsToTable()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
                         <i class="material-icons">&#xE03B;</i>
                     </a>
-                    <a ng-click="DeleteItemsInRow()" class="delete" title="Delete" data-toggle="tooltip">
+                    <a ng-click="CancelNewItems()" class="delete" title="Delete" data-toggle="tooltip">
                         <i class="material-icons">&#xE872;</i>
                     </a>
                 </td>
             </tr>
         </tbody>
-        <caption ng-show="TableIsEmpty()" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+        <caption ng-show="TableIsEmpty() && !isNewRow" style="caption-side: bottom; text-align: center; background: #F8F8F8">
             <h3>Table is empty</h3>
         </caption>
     </table>
+</div>
+
+<div ng-if="!warehouse.tables" class="container">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>
+                    <b class="font-weight-normal">{{warehouse.name}}</b>
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3 col-sm-4" style="width: 300px;">
+                <input data-ng-model="warehouseInfo.tableName" type="text" class="form-control" placeholder="New table name" aria-label="New table name" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button data-ng-click="CreateTable()" class="btn btn-outline-secondary" type="button" id="button-addon2">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

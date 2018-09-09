@@ -332,17 +332,19 @@ table.table td {
 /*  END TABLE  */
 
 
-.success-sybol {
-    color: green;
-    border: green;
-    font-size: 24px;
+a.add {
+    color: #27C46B !important;
 }
-
-.failure-symbol {
-    color: red;
-    font-size: 24px;
+.table-title a.edit {
+    color: #FFC107 !important;
 }
-
-
-
+.table-title a.delete {
+    color: #E34724 !important;
+}
+.table-title a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}  
 

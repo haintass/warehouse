@@ -23,7 +23,14 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
         {
             name: "Second warehouse",
-            id: 1
+            id: 1,
+            tables: [
+                {
+                    name: "Get out!!!",
+                    id: 0,
+                    items: []
+                }
+            ]
         },
         {
             name: "Third warehouse",
@@ -52,7 +59,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
 
         GetCurrentWarehouse: function () {
-            return warehouses[currentWarehouseId];
+            return _.cloneDeep(warehouses[currentWarehouseId]);
         },
 
         AddWarehouse: function (name) {
@@ -69,6 +76,46 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             warehouses.splice(key, 1);
             
             return self.GetWarehouses();
+        },
+
+        CreateTable: function (name) {
+            if (!warehouses[currentWarehouseId].tables) {
+                warehouses[currentWarehouseId].tables = [];
+            }
+
+            warehouses[currentWarehouseId].tables.push({
+                name: name,
+                id: warehouses[currentWarehouseId].tables.length,
+                items: []
+            });
+
+            return self.GetCurrentWarehouse();
+        },
+
+        ChangeTableName: function (newName, tableId) {
+            warehouses[currentWarehouseId].tables[tableId].name = newName;
+
+            return self.GetCurrentWarehouse();
+        },
+
+        DeleteTable: function (id) {
+            warehouses[currentWarehouseId].tables.splice(id, 1);
+
+            if (warehouses[currentWarehouseId].tables.length === 0) {
+                warehouses[currentWarehouseId].tables = null;
+            }
+
+            return self.GetCurrentWarehouse();
+        },
+
+        AddItemsToTable: function (newItems, tableId) {
+            if (!warehouses[currentWarehouseId].tables[tableId].items) {
+                warehouses[currentWarehouseId].tables[tableId].items = [];
+            }
+            
+            warehouses[currentWarehouseId].tables[tableId].items.push(newItems);
+
+            return self.GetCurrentWarehouse();
         }
     }
     
