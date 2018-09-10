@@ -44,7 +44,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     
     var warehouseId = warehouses.length;
 
-    var currentWarehouseId = 1;
+    var currentWarehouseId = 0;
 
     var self = {
         itemsName: ["Name", "Count", "Price", "Just bool"],
@@ -114,6 +114,18 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             }
             
             warehouses[currentWarehouseId].tables[tableId].items.push(newItems);
+
+            return self.GetCurrentWarehouse();
+        },
+
+        SaveChangesOfItems: function (newItem, currentTableId, currentItemId) {
+            warehouses[currentWarehouseId].tables[currentTableId].items[currentItemId] = newItem;
+
+            return self.GetCurrentWarehouse();
+        },
+
+        DeleteItems: function (tableId, itemId) {
+            warehouses[currentWarehouseId].tables[tableId].items.splice(itemId, 1);
 
             return self.GetCurrentWarehouse();
         }

@@ -38,20 +38,38 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in warehouse.tables[warehouseInfo.tableId].items">
-                <td ng-repeat="value in item track by $index">
-                        <div ng-show="!item.isEditing">{{value}}</div>
-                        <input class="form-control" ng-show="item.isEditing" type="text" value="{{value}}">
-                    
-                    <div class="error-message"></div>
+                <td ng-if="!item.isEditMode" ng-repeat="value in item track by $index">
+                    <div ng-show="!item.isEditMode">{{value}}</div>
+                    <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}">
                 </td>
+
+                <td ng-if="item.isEditMode">
+                    <input ng-model="warehouseInfo.items.name" type="text" class="form-control">
+                </td>
+                <td ng-if="item.isEditMode">
+                    <input ng-model="warehouseInfo.items.count" value="" type="number" class="form-control">
+                </td>
+                <td ng-if="item.isEditMode">
+                    <input ng-model="warehouseInfo.items.price" type="number" class="form-control">
+                </td>
+                <td ng-if="item.isEditMode">
+                    <div class="custom-control custom-checkbox">
+                        <input ng-model="warehouseInfo.items.bool" type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
+                    </div>
+                </td>
+
                 <td>
-                    <a ng-show="item.isEditing" ng-click="SaveChanges(item)" class="add add-changes" title="Add" data-toggle="tooltip">
-                        <i class="material-icons">&#xE03B;</i>
-                    </a>
-                    <a ng-show="!item.isEditing" ng-click="item.isEditing = !item.isEditing" class="edit" title="Edit" data-toggle="tooltip">
+                    <a ng-show="!item.isEditMode" ng-click="IsEditModeItems($index)" class="edit" title="Edit" data-toggle="tooltip">
                         <i class="material-icons">&#xE254;</i>
                     </a>
-                    <a ng-click="DeleteItemsInRow()" class="delete" title="Delete" data-toggle="tooltip">
+                    <a ng-show="item.isEditMode" ng-click="SaveChangesOfItems($index)" class="add add-changes" title="Add" data-toggle="tooltip">
+                        <i class="material-icons">&#xE03B;</i>
+                    </a>
+                    <a ng-show="item.isEditMode" ng-click="ChangeEditModeOfItems($index)" class="delete" title="Delete" data-toggle="tooltip">
+                        <i class="material-icons">&#xE872;</i>
+                    </a>
+                    <a ng-show="!item.isEditMode" ng-click="DeleteItems($index)" class="delete" title="Delete" data-toggle="tooltip">
                         <i class="material-icons">&#xE872;</i>
                     </a>
                 </td>
