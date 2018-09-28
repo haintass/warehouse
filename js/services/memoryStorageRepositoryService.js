@@ -1,4 +1,29 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
+
+    var listOfPossibleItems = [{
+        name: "motherboard",
+        price: 5000,
+        someBool: true
+    },{
+        name: "keyboard",
+        price: 100,
+        someBool: true
+    }];
+
+
+    var listOfVarehouse1 = [{item: listOfPossibleItems[0], count: 400}];
+    var listOfVarehouse2 = [{item: listOfPossibleItems[0], count: 10}];
+
+
+
+    var maxItems = [{
+                name: "motherboard",
+                count: 20,
+                price: 5000,
+                someBool: true
+            }
+    ];
+
     var items = [
         [
             ["motherboard", 20, 5000, true],
