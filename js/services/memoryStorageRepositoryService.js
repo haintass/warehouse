@@ -38,7 +38,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     /* ----------------END EXAMPLE----------------- */
 
     /* ----------------NEW LOGIC----------------- */
-    var listOfWarehouses = [
+    var warehouses = [
         {
             name: "First warehouse",
             id: 0,
@@ -62,7 +62,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         ]
     ];
 
-    var warehouses = [
+    var warehouses1 = [
         {
             name: "First warehouse",
             id: 0,
