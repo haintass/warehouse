@@ -40,7 +40,7 @@
             <tr ng-repeat="item in warehouse.table.items">
                 <td ng-if="!item.isEditMode" ng-repeat="value in item track by $index">
                     <div ng-show="!item.isEditMode">{{value}}</div>
-                    <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}">
+                    <!-- <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}"> -->
                 </td>
 
                 <td ng-if="item.isEditMode">
