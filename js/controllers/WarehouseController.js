@@ -23,16 +23,17 @@ angular.module("myApp").controller('WarehouseController',
                 }
             };
 
-            if ($scope.warehouse.tables) {
-                $scope.warehouseInfo.tableName = $scope.warehouse.tables[$scope.warehouseInfo.tableId].name;
+            if ($scope.warehouse.table) {
+                $scope.warehouseInfo.tableName = $scope.warehouse.table.name;
             }
 
             DisableItemsEditMode();
 
             $scope.DeleteItems = function (itemId) {
-                $scope.warehouse = DeleteItems($scope.warehouseInfo.tableId, itemId);
+                $scope.warehouse = DeleteItems(itemId);
             }
 
+            // TODO: checking on a changes before connect to repositoryService
             $scope.SaveChangesOfItems = function (itemId) {
                 $scope.warehouse = SaveChangesOfItems(
                     [
@@ -41,11 +42,10 @@ angular.module("myApp").controller('WarehouseController',
                         $scope.warehouseInfo.items.price,
                         $scope.warehouseInfo.items.bool
                     ],
-                    $scope.warehouseInfo.tableId,
                     itemId
                 );
                 
-                $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId].isEditMode = false;
+                $scope.warehouse.table.items[itemId].isEditMode = false;
             };
 
             $scope.IsEditModeItems = function (itemId) {
@@ -54,14 +54,14 @@ angular.module("myApp").controller('WarehouseController',
 
                  $scope.ChangeEditModeOfItems(itemId);
 
-                var isEditMode = $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId].isEditMode;
+                var isEditMode = $scope.warehouse.table.items[itemId].isEditMode;
                 
                 if (isEditMode) {
                     $scope.warehouseInfo.items = {
-                        name: $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId][0],
-                        count: $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId][1],
-                        price: $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId][2],
-                        bool: $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId][3]
+                        name: $scope.warehouse.table.items[itemId][0],
+                        count: $scope.warehouse.table.items[itemId][1],
+                        price: $scope.warehouse.table.items[itemId][2],
+                        bool: $scope.warehouse.table.items[itemId][3]
                     }
 
 
@@ -77,8 +77,8 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             $scope.ChangeEditModeOfItems = function(itemId) {
-                $scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId].isEditMode =
-                !$scope.warehouse.tables[$scope.warehouseInfo.tableId].items[itemId].isEditMode; 
+                $scope.warehouse.table.items[itemId].isEditMode =
+                !$scope.warehouse.table.items[itemId].isEditMode; 
             }
 
             $scope.AddItemsToTable = function () {
@@ -89,7 +89,7 @@ angular.module("myApp").controller('WarehouseController',
                     $scope.warehouseInfo.items.bool
                 ];
 
-                $scope.warehouse = AddItemsToTable(items, $scope.warehouseInfo.tableId);
+                $scope.warehouse = AddItemsToTable(items);
                 $scope.CancelNewItems();
             };
 
@@ -110,14 +110,14 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             $scope.ChangeTableName = function () {
-                if ($scope.warehouseInfo.tableName !== $scope.warehouse.tables[$scope.warehouseInfo.tableId].name){
-                    $scope.warehouse = ChangeTableName($scope.warehouseInfo.tableName, $scope.warehouseInfo.tableId);
+                if ($scope.warehouseInfo.tableName !== $scope.warehouse.table.name){
+                    $scope.warehouse = ChangeTableName($scope.warehouseInfo.tableName);
                 }
                 $scope.IsEditMode();
             };
 
             $scope.DeleteTable = function () {
-                $scope.warehouse = DeleteTable($scope.warehouseInfo.tableId);
+                $scope.warehouse = DeleteTable();
                 $scope.warehouseInfo.tableName = "";
             };
 
@@ -130,8 +130,8 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             $scope.TableIsEmpty = function () {
-                if ($scope.warehouse.tables) {
-                    if ($scope.warehouse.tables[$scope.warehouseInfo.tableId].items.length > 0) {
+                if ($scope.warehouse.table) {
+                    if ($scope.warehouse.table.items && $scope.warehouse.table.items.length > 0) {
                         return false;
                     }
                     return true;
@@ -140,8 +140,8 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             function DisableItemsEditMode () {
-                if ($scope.warehouse.tables[$scope.warehouseInfo.tableId].items) {
-                    _.forEach($scope.warehouse.tables[$scope.warehouseInfo.tableId].items, function (value) {
+                if ($scope.warehouse.table && $scope.warehouse.table.items) {
+                    _.forEach($scope.warehouse.table.items, function (value) {
                         value.isEditMode = false;
                     })
                 }

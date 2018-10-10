@@ -1,4 +1,4 @@
-<div ng-if="warehouse.tables" class="container">
+<div ng-if="warehouse.table" class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">
@@ -8,7 +8,7 @@
             </div>
             <div class="col-sm-8">
                 <h4 ng-show="!warehouseInfo.editMode" style="display: inline-block; vertical-align: 3px; margin-right: 10px;">
-                    <b>{{warehouse.tables[warehouseInfo.tableId].name}}</b>
+                    <b>{{warehouse.table.name}}</b>
                 </h4>
                 <input ng-show="warehouseInfo.editMode" ng-model="warehouseInfo.tableName" type="text">
 
@@ -37,7 +37,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in warehouse.tables[warehouseInfo.tableId].items">
+            <tr ng-repeat="item in warehouse.table.items">
                 <td ng-if="!item.isEditMode" ng-repeat="value in item track by $index">
                     <div ng-show="!item.isEditMode">{{value}}</div>
                     <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}">
@@ -106,7 +106,7 @@
     </table>
 </div>
 
-<div ng-if="!warehouse.tables" class="container">
+<div ng-if="!warehouse.table" class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm-8">

@@ -1,15 +1,27 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
-
-    var listOfPossibleItems = [{
-        name: "motherboard",
-        price: 5000,
-        someBool: true
-    },{
-        name: "keyboard",
-        price: 100,
-        someBool: true
-    }];
-
+    /* ---------------EXAMPLE------------------ */
+    var listOfPossibleItems = [
+        {
+            name: "motherboard",
+            price: 5000,
+            someBool: true
+        },
+        {
+            name: "keyboard",
+            price: 2000,
+            someBool: false
+        },
+        {
+            name: "Mouse",
+            price: 1500,
+            someBool: false
+        },
+        {
+            name: "Monitor",
+            price: 7000,
+            someBool: true
+        },
+    ];
 
     var listOfVarehouse1 = [{item: listOfPossibleItems[0], count: 400}];
     var listOfVarehouse2 = [{item: listOfPossibleItems[0], count: 10}];
@@ -23,6 +35,22 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                 someBool: true
             }
     ];
+    /* ----------------END EXAMPLE----------------- */
+
+    /* ----------------NEW LOGIC----------------- */
+    var listOfWarehouses = [
+        {
+            name: "First warehouse",
+            id: 0,
+            table: {
+                name: "First table",
+                item: listOfPossibleItems[0], 
+                count: 100 
+            }
+        }
+    ]
+    /* ----------------END NEW LOGIC----------------- */
+
 
     var items = [
         [
@@ -38,32 +66,33 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         {
             name: "First warehouse",
             id: 0,
-            tables: [
-                {
-                    name: "First table",
-                    id: 0,
-                    items: items[0]
-                }
-            ]
+            table:
+            {
+                name: "First table",
+                id: 0,
+                items: items[0]
+            }
         },
         {
             name: "Second warehouse",
             id: 1,
-            tables: [
-                {
-                    name: "Get out!!!",
-                    id: 0,
-                    items: []
-                }
-            ]
+            table:
+            {
+                name: "Get out!!!",
+                id: 0,
+                items: []
+            }
+            
         },
         {
             name: "Third warehouse",
-            id: 2
+            id: 2,
+            table: null
         },
         {
             name: "Fourth warehouse",
-            id: 3
+            id: 3,
+            table: null
         }
     ];
     
@@ -95,6 +124,8 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
 
         ChangeWarehouse: function (newName, id) {
             warehouses[id].name = newName;
+
+            return warehouses[id].name;
         },
 
         DeleteWarehouse: function (key) {
@@ -104,53 +135,44 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         },
 
         CreateTable: function (name) {
-            if (!warehouses[currentWarehouseId].tables) {
-                warehouses[currentWarehouseId].tables = [];
-            }
-
-            warehouses[currentWarehouseId].tables.push({
+            warehouses[currentWarehouseId].table = {
                 name: name,
-                id: warehouses[currentWarehouseId].tables.length,
                 items: []
-            });
+            };
 
             return self.GetCurrentWarehouse();
         },
 
-        ChangeTableName: function (newName, tableId) {
-            warehouses[currentWarehouseId].tables[tableId].name = newName;
+        ChangeTableName: function (newName) {
+            warehouses[currentWarehouseId].table.name = newName;
 
             return self.GetCurrentWarehouse();
         },
 
-        DeleteTable: function (id) {
-            warehouses[currentWarehouseId].tables.splice(id, 1);
-
-            if (warehouses[currentWarehouseId].tables.length === 0) {
-                warehouses[currentWarehouseId].tables = null;
-            }
+        DeleteTable: function () {
+            warehouses[currentWarehouseId].table = null;
 
             return self.GetCurrentWarehouse();
         },
 
-        AddItemsToTable: function (newItems, tableId) {
-            if (!warehouses[currentWarehouseId].tables[tableId].items) {
-                warehouses[currentWarehouseId].tables[tableId].items = [];
+        AddItemsToTable: function (newItems) {
+            if (!warehouses[currentWarehouseId].table.items) {
+                warehouses[currentWarehouseId].table.items = [];
             }
             
-            warehouses[currentWarehouseId].tables[tableId].items.push(newItems);
+            warehouses[currentWarehouseId].table.items.push(newItems);
 
             return self.GetCurrentWarehouse();
         },
 
-        SaveChangesOfItems: function (newItem, currentTableId, currentItemId) {
-            warehouses[currentWarehouseId].tables[currentTableId].items[currentItemId] = newItem;
+        SaveChangesOfItems: function (newItem, currentItemId) {
+            warehouses[currentWarehouseId].table.items[currentItemId] = newItem;
 
             return self.GetCurrentWarehouse();
         },
 
-        DeleteItems: function (tableId, itemId) {
-            warehouses[currentWarehouseId].tables[tableId].items.splice(itemId, 1);
+        DeleteItems: function (itemId) {
+            warehouses[currentWarehouseId].table.items.splice(itemId, 1);
 
             return self.GetCurrentWarehouse();
         }
