@@ -44,6 +44,7 @@ angular.module("myApp").controller('MyWarehousesController',
         $scope.SaveName = function (newName, id) {
             $scope.warehouses[id].name = ChangeWarehouse(newName, id);
             $scope.ChangeName(id);
+            $scope.warehouses[id].isEditMode = false;
         };
 
         $scope.DeleteWarehouse = function(id){
