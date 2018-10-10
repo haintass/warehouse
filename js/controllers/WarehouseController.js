@@ -142,7 +142,7 @@ angular.module("myApp").controller('WarehouseController',
             function DisableItemsEditMode () {
                 if ($scope.warehouse.table && $scope.warehouse.table.items) {
                     _.forEach($scope.warehouse.table.items, function (value) {
-                        value.isEditMode = false;
+                        Object.defineProperty(value, "isEditMode", { value: false, configurable: true, writable: true, enumerable: false });
                     })
                 }
             };
