@@ -17,5 +17,10 @@ angular.module("myApp", ['ngMessages', 'ngRoute'])
         templateUrl: 'views/warehouse.html',
         controller: 'WarehouseController'
     })
-    .otherwise({redirectTo: '/my-warehouses'});
+    .when('/', {
+        redirectTo: '/my-warehouses'
+    })
+    .otherwise({
+        redirectTo: '/main-page'
+    })
 });

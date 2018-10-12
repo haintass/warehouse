@@ -14,12 +14,12 @@ angular.module("myApp").controller('WarehouseController',
             $scope.warehouseInfo = {
                 tableName: "",
                 editMode: false,
-                items: {
+                item: {
                     count: null,
-                    item: {
+                    values: {
                         name: "",
                         price: null,
-                        bool: false
+                        madeInChina: false
                     }
                 }
             };
@@ -36,19 +36,26 @@ angular.module("myApp").controller('WarehouseController',
 
             // TODO: checking on a changes before connect to repositoryService
             $scope.SaveChangesOfItems = function (itemId) {
-                $scope.warehouse = SaveChangesOfItems(
-                    {
-                        count: $scope.warehouseInfo.items.count,
-                        item: {
-                            name: $scope.warehouseInfo.items.name,
-                            price: $scope.warehouseInfo.items.price,
-                            someBool: $scope.warehouseInfo.items.bool
-                        }
-                    },
-                    itemId
-                );
+                var newItem = {
+                    count: $scope.warehouseInfo.item.count,
+                    item: {
+                        name: $scope.warehouseInfo.item.value.name,
+                        price: $scope.warehouseInfo.item.value.price,
+                        madeInChina: $scope.warehouseInfo.item.value.madeInChina
+                    }
+                };
                 
                 $scope.warehouse.table.listOfItems[itemId].isEditMode = false;
+
+                var oldItem = {
+                    item: $scope.warehouse.table.listOfItems[itemId].item,
+                    count: $scope.warehouse.table.listOfItems[itemId].count
+                };
+                if (_.isEqual(newItem, oldItem)) {
+                    return;
+                }
+                
+                $scope.warehouse = SaveChangesOfItems(newItem, itemId);
             };
 
             $scope.IsEditModeItems = function (itemId) {
@@ -60,23 +67,25 @@ angular.module("myApp").controller('WarehouseController',
                 var isEditMode = $scope.warehouse.table.listOfItems[itemId].isEditMode;
                 
                 if (isEditMode) {
-                    $scope.warehouseInfo.items = {
+                    $scope.warehouseInfo.item = {
                         count: $scope.warehouse.table.listOfItems[itemId].count,
-                        item: {
+                        value: {
                             name: $scope.warehouse.table.listOfItems[itemId].item.name,
                             price: $scope.warehouse.table.listOfItems[itemId].item.price,
-                            bool: $scope.warehouse.table.listOfItems[itemId].item.someBool
+                            madeInChina: $scope.warehouse.table.listOfItems[itemId].item.madeInChina
                         }
                     }
 
 
                 }
                 else {
-                    $scope.warehouseInfo.items = {
-                        name: "",
+                    $scope.warehouseInfo.item = {
                         count: null,
-                        price: null,
-                        bool: false
+                        value: {
+                            name: "",
+                            price: null,
+                            madeInChina: false  
+                        }
                     }
                 }
             };
@@ -89,11 +98,11 @@ angular.module("myApp").controller('WarehouseController',
             $scope.AddItemsToTable = function () {
                 var items = {
                     item: {
-                           name: $scope.warehouseInfo.items.name,
-                           price: $scope.warehouseInfo.items.price,
-                           someBool: $scope.warehouseInfo.items.bool
+                           name: $scope.warehouseInfo.item.value.name,
+                           price: $scope.warehouseInfo.item.value.price,
+                           madeInChina: $scope.warehouseInfo.item.value.madeInChina
                     },
-                    count: $scope.warehouseInfo.items.count
+                    count: $scope.warehouseInfo.item.count
                 };
 
                 $scope.warehouse = AddItemsToTable(items);
@@ -101,11 +110,13 @@ angular.module("myApp").controller('WarehouseController',
             };
 
             $scope.CancelNewItems = function () {
-                $scope.warehouseInfo.items = {
-                    name: "",
+                $scope.warehouseInfo.item = {
                     count: null,
-                    price: null,
-                    bool: false
+                    value: {
+                        name: "",
+                        price: null,
+                        madeInChina: false
+                    }
                 };
 
                 DisableItemsEditMode();

@@ -4,22 +4,22 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         {
             name: "motherboard",
             price: 5000,
-            someBool: true
+            madeInChina: true
         },
         {
             name: "keyboard",
             price: 2000,
-            someBool: false
+            madeInChina: false
         },
         {
             name: "Mouse",
             price: 1500,
-            someBool: false
+            madeInChina: false
         },
         {
             name: "Monitor",
             price: 7000,
-            someBool: true
+            madeInChina: true
         },
     ];
 
@@ -32,7 +32,7 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                 name: "motherboard",
                 count: 20,
                 price: 5000,
-                someBool: true
+                madeInChina: true
             }
     ];
     /* ----------------END EXAMPLE----------------- */
@@ -47,7 +47,29 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                 listOfItems: [
                     {item: listOfPossibleItems[0], count: 100 },
                     {item: listOfPossibleItems[0], count: 50 },
-                    {item: listOfPossibleItems[1], count: 20 }
+                    {item: listOfPossibleItems[1], count: 20 },
+                    {item: listOfPossibleItems[3], count: 60 }
+                ]
+            }
+        },
+        {
+            name: "Second warehouse",
+            id: 1,
+            table: {
+                name: "First table",
+                listOfItems: [
+                    {item: listOfPossibleItems[1], count: 50 }
+                ]
+            }
+        },
+        {
+            name: "Third warehouse",
+            id: 2,
+            table: {
+                name: "My table",
+                listOfItems: [
+                    {item: listOfPossibleItems[2], count: 120 },
+                    {item: listOfPossibleItems[3], count: 80 }
                 ]
             }
         }
@@ -61,7 +83,9 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         var isEqual = false;
 
         _.forEach(list, function (value) {
-            if (_.isEqual(value, object.item)) {
+            var item = value.item ? value.item : value;
+
+            if (_.isEqual(item, object)) {
                 isEqual = true;
             }
         });
@@ -69,10 +93,24 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
         return isEqual;
     }
 
+    var ObjectIsExistenceInWarehouses = function (item) {
+        var itemExistence = false;
+        _.forEach(warehouses, function (value) {
+            itemExistence = ObjectIsExistenceInList(value.table.listOfItems, item);
+
+            if (itemExistence) {
+                return false;
+            }
+        });
+
+        return itemExistence;
+    }
+
     var GetKeyOfPossibleItem = function (object) {
-        var a = -1;
+        var a = 0;
+        
         _.forEach(listOfPossibleItems, function (value, key) {
-            if (_.isEqual(value, object.item)) {
+            if (_.isEqual(value, object)) {
                 a = key;
             }
         });
@@ -81,7 +119,63 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
     }
 
     var self = {
-        itemsName: ["Name", "Price", "Just bool", "Count"],
+        itemsName: ["Name", "Price", "Made in China", "Count"],
+
+        ChangeSpecificItems: function (currentItemId, newValues) {
+            listOfPossibleItems[currentItemId].name = newValues.name;
+            listOfPossibleItems[currentItemId].price = newValues.price;
+            listOfPossibleItems[currentItemId].madeInChina = newValues.madeInChina;
+
+            return self.GetAllItems();
+        },
+
+        DeleteSpecificItems: function (itemId) {
+            var item = listOfPossibleItems[itemId];
+            listOfPossibleItems.splice(itemId, 1);
+
+            for (var i = 0; i < warehouses.length; i++) {
+                for (var j = 0; j < warehouses[i].table.listOfItems.length; j++) {
+                    if (_.isEqual(warehouses[i].table.listOfItems[j].item, item)) {
+                        warehouses[i].table.listOfItems.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+
+            return self.GetAllItems();
+        },
+
+        GetAllItems: function () {
+            var allItems = GetAllItemsWithTotalCount(_.cloneDeep(listOfPossibleItems));
+
+            function GetAllItemsWithTotalCount (list) {
+                var items = [];
+
+                _.forEach(list, function (value) {
+                    items.push({
+                        item: value,
+                        count: GetTotalCountsForItem(value)
+                    });
+                });
+
+                function GetTotalCountsForItem (item) {
+                    var totalCount = 0;
+                    _.forEach(warehouses, function (value) {
+                        _.forEach(value.table.listOfItems, function (itemOfWarehouse) {
+                            if (_.isEqual(itemOfWarehouse.item, item)) {
+                                totalCount += itemOfWarehouse.count;
+                            }
+                        });
+                    });
+
+                    return totalCount;
+                }
+
+                return items;
+            }
+
+            return allItems;
+        },
 
         SetCurrentWarehouseId: function (id) {
             currentWarehouseId = id;
@@ -140,9 +234,9 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                 warehouses[currentWarehouseId].table.listOfItems = [];
             }
             
-            var isNewItem = !ObjectIsExistenceInList(listOfPossibleItems, newItem);
+            var itemExistence = ObjectIsExistenceInList(listOfPossibleItems, newItem.item);
 
-            if (!isNewItem) {
+            if (itemExistence) {
                 warehouses[currentWarehouseId].table.listOfItems.push({item: newItem.item, count: newItem.count});
                 
                 return self.GetCurrentWarehouse();
@@ -150,28 +244,55 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             else {
                 listOfPossibleItems.push(newItem.item);
                 warehouses[currentWarehouseId].table.listOfItems.push(newItem);
-    
+                
                 return self.GetCurrentWarehouse();
             }
         },
 
         SaveChangesOfItems: function (newItem, currentItemId) {
-            var isNewItemInPossibleItems = !ObjectIsExistenceInList(listOfPossibleItems, newItem);
+            var newItemExistence = ObjectIsExistenceInList(listOfPossibleItems, newItem.item);
 
-            if (isNewItemInPossibleItems) {
+            if (!newItemExistence) {
+                var key = GetKeyOfPossibleItem(warehouses[currentWarehouseId].table.listOfItems[currentItemId].item);
 
+                listOfPossibleItems.push(newItem.item);
+                warehouses[currentWarehouseId].table.listOfItems[currentItemId] = newItem;
+
+                newItemExistence = ObjectIsExistenceInWarehouses(listOfPossibleItems[key]);
+                
+                if (!newItemExistence) {
+                    listOfPossibleItems.splice(key, 1);
+                }
+                
             }
             else {
-                var key = GetKeyOfPossibleItem(newItem);
+                var oldItem = warehouses[currentWarehouseId].table.listOfItems[currentItemId].item;
+                var key = GetKeyOfPossibleItem(newItem.item);
                 warehouses[currentWarehouseId].table.listOfItems[currentItemId].item = listOfPossibleItems[key];
                 warehouses[currentWarehouseId].table.listOfItems[currentItemId].count = newItem.count;
+
+                var oldItemExistence = ObjectIsExistenceInWarehouses(oldItem);
+                key = GetKeyOfPossibleItem(oldItem);
+                if (!oldItemExistence) {
+                    listOfPossibleItems.splice(key, 1);
+                }
             }
+            
 
             return self.GetCurrentWarehouse();
         },
 
         DeleteItems: function (itemId) {
+            var item = warehouses[currentWarehouseId].table.listOfItems[itemId].item;   
+                     
             warehouses[currentWarehouseId].table.listOfItems.splice(itemId, 1);
+
+            var itemExistence = ObjectIsExistenceInWarehouses(item);
+            
+            if (!itemExistence) {
+                var key = GetKeyOfPossibleItem(item);
+                listOfPossibleItems.splice(key, 1);
+            }
 
             return self.GetCurrentWarehouse();
         }
