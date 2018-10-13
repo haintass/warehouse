@@ -1,5 +1,20 @@
 angular.module("myApp").service('memoryStorageRepositoryService', function () {
     /* ---------------EXAMPLE------------------ */
+    /*var listOfVarehouse1 = [{item: listOfPossibleItems[0], count: 400}];
+    var listOfVarehouse2 = [{item: listOfPossibleItems[0], count: 10}];*/
+
+
+
+    var maxItems = [{
+                name: "motherboard",
+                count: 20,
+                price: 5000,
+                madeInChina: true
+            }
+    ];
+    /* ----------------END EXAMPLE----------------- */
+
+    /* ----------------NEW LOGIC----------------- */
     var listOfPossibleItems = [
         {
             name: "motherboard",
@@ -21,23 +36,18 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             price: 7000,
             madeInChina: true
         },
+        {
+            name: "HDD",
+            price: 3000,
+            madeInChina: true
+        },
+        {
+            name: "SSD",
+            price: 3000,
+            madeInChina: false
+        }
     ];
 
-    var listOfVarehouse1 = [{item: listOfPossibleItems[0], count: 400}];
-    var listOfVarehouse2 = [{item: listOfPossibleItems[0], count: 10}];
-
-
-
-    var maxItems = [{
-                name: "motherboard",
-                count: 20,
-                price: 5000,
-                madeInChina: true
-            }
-    ];
-    /* ----------------END EXAMPLE----------------- */
-
-    /* ----------------NEW LOGIC----------------- */
     var warehouses = [
         {
             name: "First warehouse",
@@ -48,7 +58,8 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
                     {item: listOfPossibleItems[0], count: 100 },
                     {item: listOfPossibleItems[0], count: 50 },
                     {item: listOfPossibleItems[1], count: 20 },
-                    {item: listOfPossibleItems[3], count: 60 }
+                    {item: listOfPossibleItems[3], count: 60 },
+                    {item: listOfPossibleItems[5], count: 240 }
                 ]
             }
         },
@@ -58,7 +69,9 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
             table: {
                 name: "First table",
                 listOfItems: [
-                    {item: listOfPossibleItems[1], count: 50 }
+                    {item: listOfPossibleItems[1], count: 50 },
+                    {item: listOfPossibleItems[3], count: 75 },
+                    {item: listOfPossibleItems[4], count: 115 }
                 ]
             }
         },
@@ -120,6 +133,60 @@ angular.module("myApp").service('memoryStorageRepositoryService', function () {
 
     var self = {
         itemsName: ["Name", "Price", "Made in China", "Count"],
+
+        GetFiveGoodsWithTheMostExpensivePrice: function () {
+            var allItems = self.GetAllItems();
+
+            function DescendingSorting (a, b) {
+                if (a.item.price < b.item.price) {
+                    return 1;
+                }
+                if (a.item.price > b.item.price) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            allItems.sort(DescendingSorting);
+
+            var firstFiveItems = [];
+
+            for (var i = 0; i < 5; i++) {
+                if (allItems[i] === undefined) {
+                    break;
+                }
+                firstFiveItems.push(allItems[i]);
+            }
+
+            return firstFiveItems;
+        },
+
+        GetFiveGoodsWithTheMostCount: function () {
+            var allItems = self.GetAllItems();
+
+            function DescendingSorting (a, b) {
+                if (a.count < b.count) {
+                    return 1;
+                }
+                if (a.count > b.count) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            allItems.sort(DescendingSorting);
+
+            var firstFiveItems = [];
+
+            for (var i = 0; i < 5; i++) {
+                if (allItems[i] === undefined) {
+                    break;
+                }
+                firstFiveItems.push(allItems[i]);
+            }
+
+            return firstFiveItems;
+        },
 
         ChangeSpecificItems: function (currentItemId, newValues) {
             listOfPossibleItems[currentItemId].name = newValues.name;
