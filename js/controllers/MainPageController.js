@@ -1,5 +1,5 @@
 angular.module("myApp").controller('MainPageController',
-    ['$scope',
-    function($scope) {
+    ['$scope', 'memoryStorageRepositoryService',
+    function($scope, memoryStorageRepositoryService) {
         
-}])
+    }]);

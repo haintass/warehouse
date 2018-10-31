@@ -37,26 +37,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in warehouse.table.items">
-                <td ng-if="!item.isEditMode" ng-repeat="value in item track by $index">
-                    <div ng-show="!item.isEditMode">{{value}}</div>
-                    <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}">
+            <tr ng-repeat="item in warehouse.table.listOfItems">
+                <td ng-if="!item.isEditMode" ng-repeat="value in item.item track by $index">
+                    <div>{{value}}</div>
+                    <!-- <input ng-show="item.isEditMode" class="form-control" type="text" value="{{value}}"> -->
+                </td>
+                <td ng-if="!item.isEditMode">
+                    <div>{{item.count}}</div>
                 </td>
 
                 <td ng-if="item.isEditMode">
-                    <input ng-model="warehouseInfo.items.name" type="text" class="form-control">
+                    <input ng-model="warehouseInfo.item.value.name" type="text" class="form-control">
                 </td>
                 <td ng-if="item.isEditMode">
-                    <input ng-model="warehouseInfo.items.count" value="" type="number" class="form-control">
-                </td>
-                <td ng-if="item.isEditMode">
-                    <input ng-model="warehouseInfo.items.price" type="number" class="form-control">
+                    <input ng-model="warehouseInfo.item.value.price" type="number" class="form-control">
                 </td>
                 <td ng-if="item.isEditMode">
                     <div class="custom-control custom-checkbox">
-                        <input ng-model="warehouseInfo.items.bool" type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <input ng-model="warehouseInfo.item.value.madeInChina" type="checkbox" class="custom-control-input" id="defaultUnchecked">
                         <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
                     </div>
+                </td>                
+                <td ng-if="item.isEditMode">
+                    <input ng-model="warehouseInfo.item.count" value="" type="number" class="form-control">
                 </td>
 
                 <td>
@@ -76,20 +79,21 @@
             </tr>
             <tr ng-show="isNewRow">
                 <td>
-                    <input ng-model="warehouseInfo.items.name" type="text" class="form-control">
+                    <input ng-model="warehouseInfo.item.value.name" type="text" class="form-control">
                 </td>
                 <td>
-                    <input ng-model="warehouseInfo.items.count" value="" type="number" class="form-control">
-                </td>
-                <td>
-                    <input ng-model="warehouseInfo.items.price" type="number" class="form-control">
+                    <input ng-model="warehouseInfo.item.value.price" type="number" class="form-control">
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input ng-model="warehouseInfo.items.bool" type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <input ng-model="warehouseInfo.item.value.madeInChina" type="checkbox" class="custom-control-input" id="defaultUnchecked">
                         <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
                     </div>
                 </td>
+                <td>
+                    <input ng-model="warehouseInfo.item.count" value="" type="number" class="form-control">
+                </td>
+
                 <td>
                     <a ng-click="AddItemsToTable()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
                         <i class="material-icons">&#xE03B;</i>

@@ -1,3 +1,88 @@
-<h1>All goods {{hi}}</h1>
+<div>
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>
+                    <b>All goods from your warehouses</b>
+                </h1>
+            </div>
+        </div>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th ng-repeat="value in itemsName">{{value}}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="value in possibleItems">
+                <td ng-if="!value.isEditMode" ng-repeat="item in value.item track by $index">
+                    <div>{{item}}</div>
+                </td>
 
+                <td ng-if="value.isEditMode">
+                    <input ng-model="itemInfo.value.name" type="text" class="form-control">
+                </td>
+                <td ng-if="value.isEditMode">
+                    <input ng-model="itemInfo.value.price" type="number" class="form-control">
+                </td>
+                <td ng-if="value.isEditMode">
+                    <div class="custom-control custom-checkbox">
+                        <input ng-model="itemInfo.value.madeInChina" type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
+                    </div>
+                </td>
+                <td>
+                    <div>{{value.count}}</div>
+                </td>
+
+                <td>
+                    <a ng-show="!value.isEditMode" ng-click="IsEditModeItem($index)" class="edit" title="Edit" data-toggle="tooltip">
+                        <i class="material-icons">&#xE254;</i>
+                    </a>
+                    <a ng-show="value.isEditMode" ng-click="SaveChangesOfItems($index)" class="add add-changes" title="Add" data-toggle="tooltip">
+                        <i class="material-icons">&#xE03B;</i>
+                    </a>
+                    <a ng-show="value.isEditMode" ng-click="ChangeEditModeOfItem($index)" class="delete" title="Delete" data-toggle="tooltip">
+                        <i class="material-icons">&#xE872;</i>
+                    </a>
+                    <a ng-show="!value.isEditMode" ng-click="DeleteItems($index)" class="delete" title="Delete" data-toggle="tooltip">
+                        <i class="material-icons">&#xE872;</i>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-show="isNewRow">
+                <td>
+                    <input type="text" class="form-control">
+                </td>
+                <td>
+                    <input type="number" class="form-control">
+                </td>
+                <td>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">DO it!</label>
+                    </div>
+                </td>
+                <td>
+                    <input value="" type="number" class="form-control">
+                </td>
+
+                <td>
+                    <a ng-click="AddItemsToTable()" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
+                        <i class="material-icons">&#xE03B;</i>
+                    </a>
+                    <a ng-click="CancelNewItems()" class="delete" title="Delete" data-toggle="tooltip">
+                        <i class="material-icons">&#xE872;</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <caption ng-show="TableIsEmpty() && !isNewRow" style="caption-side: bottom; text-align: center; background: #F8F8F8">
+            <h3>Table is empty</h3>
+        </caption>
+    </table>
+</div>
 

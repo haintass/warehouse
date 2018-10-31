@@ -22,26 +22,29 @@
   </thead>
   <tbody>
       <tr ng-repeat="warehouse in warehouses" style="cursor: pointer;">
-          <td ng-show="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.name}}</td>
-          <td ng-show="warehouses[$index].isEditMode"><input class="form-control" type="text" ng-model="warehouseInfo.name"></td>
+          <td ng-if="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.name}}</td>
+          <td ng-if="warehouses[$index].isEditMode"><input class="form-control" type="text" ng-model="warehouseInfo.name"></td>
 
-          <td ng-show="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.id}}</td>
-          <td ng-show="warehouses[$index].isEditMode">{{warehouse.id}}</td>
+          <td ng-if="!warehouses[$index].isEditMode" ng-click="CloseOpenQuestionPopup($index)">{{warehouse.id}}</td>
+          <td ng-if="warehouses[$index].isEditMode">{{warehouse.id}}</td>
           <td>
-              <a ng-show="!warehouses[$index].isEditMode" ng-click="ChangeName($index)" class="edit" title="Edit" data-toggle="tooltip" data-original-title="Edit">
+              <a ng-if="!warehouses[$index].isEditMode" ng-click="ChangeName($index)" class="edit" title="Edit" data-toggle="tooltip" data-original-title="Edit">
                   <i class="material-icons">&#xE254;</i>
               </a>
-              <a ng-show="warehouses[$index].isEditMode" ng-click="SaveName(warehouseInfo.name, $index)" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
+              <a ng-if="warehouses[$index].isEditMode" ng-click="SaveName(warehouseInfo.name, $index)" class="add add-new-item" title="Add" data-toggle="tooltip" data-original-title="Add">
                   <i class="material-icons">&#xE03B;</i>
               </a>
 
-              <a ng-click="DeleteWarehouse($index)" class="delete" title="Delete" data-toggle="tooltip">
+              <a ng-if="warehouses[$index].isEditMode" ng-click="warehouses[$index].isEditMode = !warehouses[$index].isEditMode" class="delete" title="Delete" data-toggle="tooltip">
                   <i class="material-icons">&#xE872;</i>
               </a>
+              <a ng-if="!warehouses[$index].isEditMode" ng-click="DeleteWarehouse($index)" class="delete" title="Delete" data-toggle="tooltip">
+                <i class="material-icons">&#xE872;</i>
+            </a>
           </td>
       </tr>
       
-      <tr ng-show="isNewRow">
+      <tr ng-if="isNewRow">
           <td>
               <input type="text" ng-model="warehouseInfo.name" class="form-control">
           </td>
