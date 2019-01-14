@@ -5,6 +5,7 @@
                 <h1>
                     <b>All goods from your warehouses</b>
                 </h1>
+                <h4>Search: <input ng-model="searchText"></h4>
             </div>
         </div>
     </div>
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="value in possibleItems">
+            <tr ng-repeat="value in possibleItems | filter:searchText">
                 <td ng-if="!value.isEditMode" ng-repeat="item in value.item track by $index">
                     <div>{{item}}</div>
                 </td>

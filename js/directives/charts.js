@@ -14,7 +14,7 @@ angular.module("myApp").directive('charts', function () {
                 var data = google.visualization.arrayToDataTable([['Item', 'Count']]);
           
                 for (var i = 0; i < listOfFiveGoodsWithTheMostCount.length; i++) {
-                    data.xg.push({
+                    data.wg.push({
                         c: [
                             {v: listOfFiveGoodsWithTheMostCount[i].item.name},
                             {v: listOfFiveGoodsWithTheMostCount[i].count}
